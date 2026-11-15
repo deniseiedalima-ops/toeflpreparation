@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TOEFL iBT · English With Denise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f0ede8;--card:#111;--ink:#111;--muted:#6b6660;--line:#dcd6cd;--orange:#ff6a00;--ok:#1f9d55;--bad:#d64545;--soft:#fff;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.5}
+h1,h2,h3{font-family:'DM Serif Display',serif;font-weight:400}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 80px}
+.screen{display:none}.screen.on{display:block}
+.brand{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hero{background:var(--card);color:#fff;border-radius:22px;padding:26px 22px;margin:14px 0 20px}
+.hero h1{font-size:32px;line-height:1.1}
+.hero p{color:#bbb;margin-top:8px;font-size:15px}
+.hero b{color:var(--orange);font-weight:500}
+input[type=text]{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);font:inherit;font-size:16px;background:#fff}
+.btn{background:var(--orange);color:#fff;border:0;border-radius:14px;padding:13px 20px;font-size:15px;font-weight:700}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.dark{background:var(--card)}.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.sm{padding:8px 14px;font-size:13px;border-radius:10px}
+.tabs{display:flex;gap:6px;background:#e4dfd7;padding:5px;border-radius:14px;margin-bottom:18px;overflow-x:auto}
+.tab{flex:1;border:0;background:transparent;padding:10px 8px;border-radius:10px;font-size:14px;font-weight:500;white-space:nowrap;color:var(--muted)}
+.tab.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.pane{display:none}.pane.on{display:block}
+.skillrow{margin-bottom:22px}
+.skillhead{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.skillhead h2{font-size:22px}.skillhead span{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.slot{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px;text-align:left;min-height:96px;display:flex;flex-direction:column;justify-content:space-between}
+.slot:hover:not(:disabled){border-color:var(--ink)}
+.slot:disabled{opacity:.5;cursor:default;background:transparent;border-style:dashed}
+.slot .t{font-weight:700;font-size:15px}.slot .m{font-size:12px;color:var(--muted)}
+.slot .score{font-size:12px;color:var(--ok);font-weight:700}
+.slot.big{min-height:120px;background:var(--card);color:#fff;border-color:var(--card)}
+.slot.big .m{color:#aaa}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px;background:#ffe6d5;color:#b54800}
+.card{background:#fff;border-radius:18px;padding:20px;margin-bottom:14px;border:1px solid var(--line)}
+.note{font-size:13px;color:var(--muted)}
+/* exam */
+.topbar{position:sticky;top:0;z-index:5;background:var(--card);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:0 0 16px 16px;margin:-20px -16px 18px}
+.topbar .sec{font-weight:700;font-size:14px}.topbar .sub{font-size:12px;color:#aaa}
+.timer{font-variant-numeric:tabular-nums;font-weight:700;font-size:18px;background:#222;padding:6px 12px;border-radius:10px}
+.timer.low{color:var(--orange)}
+.progress{height:4px;background:#333;border-radius:4px;margin-top:8px;overflow:hidden}.progress i{display:block;height:100%;background:var(--orange);width:0}
+.tasklabel{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:6px}
+.instr{font-size:14px;color:var(--muted);margin-bottom:14px}
+.passage{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;font-size:16px;line-height:1.75;margin-bottom:16px;white-space:pre-wrap}
+.passage h3{font-size:20px;margin-bottom:8px;white-space:normal}
+.cw input{border:0;border-bottom:2px solid var(--orange);background:#fff7f0;font:inherit;font-size:16px;padding:0 2px;text-align:left;border-radius:3px;outline:none}
+.cw input.ok{border-color:var(--ok);background:#e9f8ef}.cw input.bad{border-color:var(--bad);background:#fdeaea}
+.q{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.q .en{font-weight:500;margin-bottom:10px}
+.opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:#faf8f5;border:1.5px solid transparent;border-radius:12px;padding:11px 12px;margin-bottom:6px;font-size:15px}
+.opt:hover{border-color:var(--line)}.opt.sel{border-color:var(--ink);background:#fff}
+.opt .l{flex:none;width:24px;height:24px;border-radius:50%;background:#e8e3db;display:grid;place-items:center;font-size:12px;font-weight:700}
+.opt.sel .l{background:var(--ink);color:#fff}
+.audiobox{background:var(--card);color:#fff;border-radius:18px;padding:22px;text-align:center;margin-bottom:16px}
+.audiobox .big{font-size:42px;margin-bottom:6px}
+.audiobox .st{font-size:13px;color:#aaa;margin-top:8px}
+.tiles{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.tile{background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;font-size:15px}
+.tile.used{opacity:.25;pointer-events:none}
+.built{min-height:56px;background:#fff;border:2px dashed var(--line);border-radius:14px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.built .tile{background:#fff3ea;border-color:#ffc9a3}
+.built .fixed{font-size:15px;padding:8px 2px;color:var(--muted)}
+textarea{width:100%;min-height:260px;border-radius:14px;border:1.5px solid var(--line);padding:14px;font:inherit;font-size:15px;line-height:1.6;resize:vertical}
+.wc{text-align:right;font-size:13px;color:var(--muted);margin-top:4px}
+.post{border-left:3px solid var(--line);padding:8px 12px;margin:10px 0;font-size:15px}
+.post b{display:block;font-size:13px}
+.prof{border-left-color:var(--orange)}
+.rec{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--orange)}
+.rec i{width:10px;height:10px;border-radius:50%;background:var(--orange);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.2}}
+.nav{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+/* results */
+.bands{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:14px 0}
+.band{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center}
+.band .n{font-family:'DM Serif Display',serif;font-size:38px;line-height:1}
+.band .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.band .s{font-size:12px;color:var(--muted)}
+.band.main{background:var(--card);color:#fff;border-color:var(--card)}.band.main .n{color:var(--orange)}
+.bar{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:14px}
+.bar .nm{width:44%}.bar .tr{flex:1;height:10px;background:#eee;border-radius:6px;overflow:hidden}.bar .tr i{display:block;height:100%;background:var(--orange)}
+.bar .pc{width:44px;text-align:right;font-weight:700}
+.rev{font-size:14px;padding:10px 0;border-bottom:1px solid #eee}
+.rev .ok{color:var(--ok);font-weight:700}.rev .bad{color:var(--bad);font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:9px 6px;border-bottom:1px solid #eee}th{font-size:12px;color:var(--muted);font-weight:500}
+.center{text-align:center}.mt{margin-top:14px}
+@media(max-width:600px){.hero h1{font-size:26px}.bar .nm{width:38%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- LOGIN -->
+<section id="screen-login" class="screen on">
+  <div class="brand">English With Denise</div>
+  <div class="hero">
+    <h1>TOEFL iBT<br>Practice Platform</h1>
+    <p>Simulados por habilidade e simulados completos no <b>formato oficial de 2026</b>: Reading, Listening, Writing e Speaking, com nota de 1 a 6.</p>
+  </div>
+  <div class="card">
+    <label class="note" for="nome">Seu nome completo</label>
+    <input type="text" id="nome" placeholder="Ex.: Ana Karoline Souza" autocomplete="name" style="margin:8px 0 14px">
+    <button class="btn" id="btn-entrar">Entrar</button>
+    <p class="note mt">Use sempre o mesmo nome: é assim que seus resultados ficam salvos neste aparelho e chegam para a Denise.</p>
+  </div>
+</section>
+
+<!-- HOME -->
+<section id="screen-home" class="screen">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div class="brand">English With Denise · TOEFL iBT</div>
+    <button class="btn ghost sm" id="btn-sair">Trocar aluno</button>
+  </div>
+  <div class="hero" style="padding:20px 22px">
+    <h1 id="ola" style="font-size:26px">Hi!</h1>
+    <p>Comece pelos simulados de cada habilidade. Quando estiver confortável, faça o simulado completo.</p>
+  </div>
+  <div class="tabs">
+    <button class="tab on" data-pane="pane-skill">🎯 Por habilidade</button>
+    <button class="tab" data-pane="pane-full">📝 Simulados completos</button>
+    <button class="tab" data-pane="pane-data">📊 Meu desempenho</button>
+  </div>
+  <div id="pane-skill" class="pane on"></div>
+  <div id="pane-full" class="pane"></div>
+  <div id="pane-data" class="pane"></div>
+</section>
+
+<!-- INTRO DA SEÇÃO -->
+<section id="screen-intro" class="screen">
+  <div class="brand" id="intro-brand"></div>
+  <div class="hero"><h1 id="intro-title"></h1><p id="intro-text"></p></div>
+  <div class="card" id="intro-body"></div>
+  <div class="nav"><button class="btn ghost" id="intro-voltar">Voltar</button><button class="btn" id="intro-go">Começar</button></div>
+</section>
+
+<!-- PROVA -->
+<section id="screen-exam" class="screen">
+  <div class="topbar">
+    <div style="flex:1;min-width:0">
+      <div class="sec" id="tb-sec"></div><div class="sub" id="tb-sub"></div>
+      <div class="progress"><i id="tb-prog"></i></div>
+    </div>
+    <div class="timer" id="tb-timer" style="margin-left:12px">--:--</div>
+  </div>
+  <div id="stage"></div>
+  <div class="nav"><button class="btn" id="btn-next">Próxima →</button></div>
+</section>
+
+<!-- RESULTADO -->
+<section id="screen-result" class="screen">
+  <div class="brand">Resultado</div>
+  <h1 id="res-title" style="font-size:30px;margin:6px 0 2px"></h1>
+  <p class="note" id="res-sub"></p>
+  <div class="bands" id="res-bands"></div>
+  <p class="note" id="res-envio"></p>
+  <div id="res-body"></div>
+  <div class="nav"><button class="btn dark" id="btn-home">Voltar ao início</button></div>
+</section>
+
+</div>
+
+<script>
+/* =====================================================================
+   CONFIGURAÇÃO
+   ===================================================================== */
+const NOTION_ENDPOINT = '/api/toefl';
+
+// Opcional: gravações do Speaking vão para o Cloudinary e o link chega no Notion.
+// Deixe vazio para desligar (o aluno ainda ouve e baixa as próprias gravações).
+const CLOUDINARY_CLOUD = '';        // ex.: 'dxyz123'
+const CLOUDINARY_PRESET = '';       // upload preset "unsigned"
+
+// Quantas vezes o aluno pode ouvir cada áudio (a prova oficial toca 1 vez).
+const OUVIR_MAX = { habilidade: 2, completo: 1 };
+
+// Acerto mínimo no módulo 1 para ir ao módulo 2 difícil (Reading/Listening adaptativos).
+const CORTE_ADAPTATIVO = 0.6;
+
+// Tempo oficial de cada seção (em segundos). null = só os tempos de cada tarefa.
+const SECOES = {
+  reading:   { nome: 'Reading',   emoji: '📖', tempo: 30 * 60 },
+  listening: { nome: 'Listening', emoji: '🎧', tempo: 29 * 60 },
+  writing:   { nome: 'Writing',   emoji: '✍️', tempo: 23 * 60 },
+  speaking:  { nome: 'Speaking',  emoji: '🎙️', tempo: null },
+};
+const ORDEM = ['reading', 'listening', 'writing', 'speaking'];
+
+const TIPOS = {
+  completar:  { sec: 'reading',   nome: 'Complete the Words',            instr: 'Fill in the missing letters to complete the words in the paragraph.' },
+  diaria:     { sec: 'reading',   nome: 'Read in Daily Life',            instr: 'Read the text and answer the questions.' },
+  academica:  { sec: 'reading',   nome: 'Read an Academic Passage',      instr: 'Read the passage and answer the questions.' },
+  resposta:   { sec: 'listening', nome: 'Listen and Choose a Response',  instr: 'Listen to what the speaker says. Choose the best response.' },
+  conversa:   { sec: 'listening', nome: 'Listen to a Conversation',      instr: 'Listen to the conversation and answer the questions.' },
+  aviso:      { sec: 'listening', nome: 'Listen to an Announcement',     instr: 'Listen to the announcement and answer the questions.' },
+  palestra:   { sec: 'listening', nome: 'Listen to an Academic Talk',    instr: 'Listen to the talk and answer the questions.' },
+  frase:      { sec: 'writing',   nome: 'Build a Sentence',              instr: 'Put the words in the correct order to make a sentence that answers or responds to the first speaker.' },
+  email:      { sec: 'writing',   nome: 'Write an Email',                instr: 'Write an email that responds to the situation. Address every point.' },
+  discussao:  { sec: 'writing',   nome: 'Write for an Academic Discussion', instr: 'Your professor posted a question. Write a post that contributes to the discussion.' },
+  repetir:    { sec: 'speaking',  nome: 'Listen and Repeat',             instr: 'Listen to the sentence and repeat exactly what you hear.' },
+  entrevista: { sec: 'speaking',  nome: 'Take an Interview',             instr: 'Answer the interviewer\'s question. Speak until the timer ends.' },
+};
+
+/* =====================================================================
+   CONTEÚDO
+   ---------------------------------------------------------------------
+   BANCO: cada habilidade tem seus simulados (R1, R2... L1... W1... S1...).
+   Simulado vazio aparece como "Em breve" para o aluno.
+   COMPLETOS: cada simulado completo aponta para um simulado de cada seção.
+   Formato de cada tipo de tarefa: ver README.md.
+   Os itens "0" (R0, L0, W0, S0, C0) são DEMONSTRAÇÃO — apague quando quiser.
+   ===================================================================== */
+const BANCO = {
+  reading: {
+    R0: { titulo: 'Demo Reading', demo: true, modulos: {
+      base: [
+        { tipo: 'completar', texto: 'Bees are among the most important pollinators on the planet. As they move fr{{om|om}} flower to flower, they carry pol{{len|len}} that allows plants to produce fruit and se{{eds|eds}}. In recent years, however, bee popu{{lations|lations}} have declined in many re{{gions|gions}}.' },
+        { tipo: 'diaria', titulo: 'Notice — Campus Library', texto: 'Starting Monday, the library will close at 8 p.m. instead of 10 p.m. while the second floor is renovated. Group study rooms can still be booked online, but only for a maximum of two hours per day. Printers on the first floor will not be affected.',
+          questoes: [
+            { enunciado: 'Why is the library changing its hours?', opcoes: ['Because of a staff shortage', 'Because part of the building is being renovated', 'Because fewer students use it at night', 'Because the printers are broken'], correta: 1 },
+            { enunciado: 'What is true about the study rooms?', opcoes: ['They are closed until further notice', 'They must be booked in person', 'Students can book them for up to two hours a day', 'They are only available on the second floor'], correta: 2 },
+          ] },
+      ],
+      dificil: [
+        { tipo: 'academica', titulo: 'Urban Heat Islands', texto: 'Cities are often several degrees warmer than the surrounding countryside, a phenomenon known as the urban heat island effect. Materials such as asphalt and concrete absorb sunlight during the day and release it slowly at night. In addition, cities have fewer trees, which normally cool the air through a process called evapotranspiration. Some cities have responded by painting roofs white and planting trees along major streets.',
+          questoes: [
+            { enunciado: 'According to the passage, why do cities stay warm at night?', opcoes: ['Because cars produce heat', 'Because building materials release stored heat slowly', 'Because there is less wind in cities', 'Because of air pollution'], correta: 1 },
+            { enunciado: 'The word "responded" in the passage is closest in meaning to', opcoes: ['reacted', 'refused', 'reported', 'repeated'], correta: 0 },
+          ] },
+      ],
+      facil: [
+        { tipo: 'diaria', titulo: 'Text message', texto: 'Hi Sam! The bus to the museum leaves at 9:15, not 9:00. Meet me at the main gate. Bring your student card — it gives you a discount.',
+          questoes: [
+            { enunciado: 'Why should Sam bring a student card?', opcoes: ['To get on the bus', 'To pay less', 'To enter the main gate', 'To meet the teacher'], correta: 1 },
+          ] },
+      ],
+    } },
+    R1: { titulo: 'Reading 1', modulos: { base: [], dificil: [], facil: [] } },
+    R2: { titulo: 'Reading 2', modulos: { base: [], dificil: [], facil: [] } },
+    R3: { titulo: 'Reading 3', modulos: { base: [], dificil: [], facil: [] } },
+    R4: { titulo: 'Reading 4', modulos: { base: [], dificil: [], facil: [] } },
+  },
+  listening: {
+    L0: { titulo: 'Demo Listening', demo: true, modulos: {
+      base: [
+        { tipo: 'resposta', audio: '', transcricao: 'Do you know if the cafeteria is open on weekends?', opcoes: ['Yes, I usually have lunch at noon.', 'I think it opens on Saturdays but not Sundays.', 'The food there is pretty good.', 'No, I didn\'t go last weekend.'], correta: 1 },
+        { tipo: 'aviso', audio: '', transcricao: 'Attention, students. Tomorrow\'s chemistry lab has been moved from room 204 to room 310 because of a problem with the ventilation system. Please remember to bring your safety glasses, as extra pairs will not be provided.',
+          questoes: [
+            { enunciado: 'Why was the lab moved?', opcoes: ['The room was too small', 'There is a ventilation problem', 'The professor is sick', 'Room 204 is being painted'], correta: 1 },
+            { enunciado: 'What should students bring?', opcoes: ['Their lab reports', 'Their own safety glasses', 'A calculator', 'Their textbooks'], correta: 1 },
+          ] },
+      ],
+      dificil: [], facil: [],
+    } },
+    L1: { titulo: 'Listening 1', modulos: { base: [], dificil: [], facil: [] } },
+    L2: { titulo: 'Listening 2', modulos: { base: [], dificil: [], facil: [] } },
+    L3: { titulo: 'Listening 3', modulos: { base: [], dificil: [], facil: [] } },
+    L4: { titulo: 'Listening 4', modulos: { base: [], dificil: [], facil: [] } },
+  },
+  writing: {
+    W0: { titulo: 'Demo Writing', demo: true, itens: [
+      { tipo: 'frase', contexto: 'Where did you leave the keys?', inicio: 'I', palavras: ['them', 'left', 'on', 'kitchen', 'the', 'table'], resposta: 'left them on the kitchen table' },
+      { tipo: 'frase', contexto: 'Why were you late this morning?', inicio: '', palavras: ['bus', 'the', 'missed', 'I', 'because', 'overslept', 'I'], resposta: 'I missed the bus because I overslept' },
+      { tipo: 'email', tempo: 7 * 60, situacao: 'You signed up for a weekend photography workshop, but you just found out you have a family event on the same Saturday.',
+        tarefas: ['Explain why you cannot attend on Saturday', 'Ask if you can join the Sunday session instead', 'Ask whether you need to bring your own camera'], para: 'Ms. Carter, workshop organizer' },
+      { tipo: 'discussao', tempo: 10 * 60, professor: 'This week we discussed remote work. Some people say working from home makes employees more productive; others believe offices are essential for teamwork. Which view do you agree with, and why?',
+        alunos: [ { nome: 'Lucas', texto: 'I think working from home is more productive because there are fewer interruptions and no time is wasted commuting.' },
+                  { nome: 'Mariana', texto: 'I disagree. In an office, you can solve problems quickly by talking to colleagues face to face, which is hard online.' } ] },
+    ] },
+    W1: { titulo: 'Writing 1', itens: [] },
+    W2: { titulo: 'Writing 2', itens: [] },
+    W3: { titulo: 'Writing 3', itens: [] },
+    W4: { titulo: 'Writing 4', itens: [] },
+  },
+  speaking: {
+    S0: { titulo: 'Demo Speaking', demo: true, itens: [
+      { tipo: 'repetir', audio: '', transcricao: 'The library opens at nine on weekdays.', tempo: 10 },
+      { tipo: 'repetir', audio: '', transcricao: 'Please submit your assignment before the end of the week.', tempo: 12 },
+      { tipo: 'entrevista', contexto: 'You are taking part in a survey about study habits.', tempo: 45,
+        perguntas: [ { audio: '', texto: 'Where do you usually prefer to study, and why?' },
+                     { audio: '', texto: 'Some people think students should study in groups. Others prefer to study alone. What is your opinion?' } ] },
+    ] },
+    S1: { titulo: 'Speaking 1', itens: [] },
+    S2: { titulo: 'Speaking 2', itens: [] },
+    S3: { titulo: 'Speaking 3', itens: [] },
+    S4: { titulo: 'Speaking 4', itens: [] },
+  },
+};
+
+const COMPLETOS = [
+  { id: 'C0', titulo: 'Simulado Completo Demo', demo: true, reading: 'R0', listening: 'L0', writing: 'W0', speaking: 'S0' },
+  { id: 'C1', titulo: 'Simulado Completo 1', reading: '', listening: '', writing: '', speaking: '' },
+  { id: 'C2', titulo: 'Simulado Completo 2', reading: '', listening: '', writing: '', speaking: '' },
+  { id: 'C3', titulo: 'Simulado Completo 3', reading: '', listening: '', writing: '', speaking: '' },
+  { id: 'C4', titulo: 'Simulado Completo 4', reading: '', listening: '', writing: '', speaking: '' },
+];
+
+/* =====================================================================
+   UTILIDADES
+   ===================================================================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const LETRAS = 'ABCD';
+const norm = s => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ').replace(/[.!?]+$/, '');
+const fmt = s => { s = Math.max(0, Math.ceil(s)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); };
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const contaPalavras = t => (t.trim().match(/\S+/g) || []).length;
+function show(id) { document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id)); window.scrollTo(0, 0); }
+
+function aluno() { return localStorage.getItem('toefl_aluno') || ''; }
+function chaveAluno() { return aluno().trim().toLowerCase().replace(/\s+/g, ' '); }
+function historico() { try { return JSON.parse(localStorage.getItem('toefl_hist_' + chaveAluno())) || []; } catch { return []; } }
+function salvarHistorico(r) { const h = historico(); h.unshift(r); try { localStorage.setItem('toefl_hist_' + chaveAluno(), JSON.stringify(h.slice(0, 100))); } catch {} }
+
+function itensDaSecao(sec, id) {
+  const s = BANCO[sec] && BANCO[sec][id]; if (!s) return 0;
+  if (s.modulos) return (s.modulos.base || []).length;
+  return (s.itens || []).length;
+}
+function completoPronto(c) { return ORDEM.every(sec => c[sec] && itensDaSecao(sec, c[sec]) > 0); }
+
+/* Converte pontuação (0–1) em banda 1–6 (estimativa, não é tabela oficial ETS). */
+function banda(p, caminho) {
+  const t = [[.95, 6], [.88, 5.5], [.8, 5], [.72, 4.5], [.64, 4], [.55, 3.5], [.45, 3], [.35, 2.5], [.25, 2], [.15, 1.5]];
+  let b = 1; for (const [c, v] of t) if (p >= c) { b = v; break; }
+  if (caminho === 'facil') b = Math.min(b, 4);   // módulo mais fácil limita a nota máxima
+  return b;
+}
+const media05 = arr => Math.round((arr.reduce((a, b) => a + b, 0) / arr.length) * 2) / 2;
+
+/* =====================================================================
+   ÁUDIO (arquivo gravado pela Denise; se não houver, o navegador lê a transcrição)
+   ===================================================================== */
+let audioAtual = null;
+function pararAudio() { if (audioAtual) { audioAtual.pause(); audioAtual = null; } if ('speechSynthesis' in window) speechSynthesis.cancel(); }
+function tocar(src, texto) {
+  pararAudio();
+  return new Promise(resolve => {
+    if (src) {
+      audioAtual = new Audio(src);
+      audioAtual.onended = () => resolve(); audioAtual.onerror = () => resolve();
+      audioAtual.play().catch(() => resolve());
+    } else if ('speechSynthesis' in window && texto) {
+      const u = new SpeechSynthesisUtterance(texto);
+      u.lang = 'en-US'; u.rate = 0.95;
+      const v = speechSynthesis.getVoices().find(v => /en-US/i.test(v.lang)); if (v) u.voice = v;
+      u.onend = () => resolve(); u.onerror = () => resolve();
+      speechSynthesis.speak(u);
+      setTimeout(resolve, 2000 + texto.length * 90); // segurança caso o navegador não dispare onend
+    } else resolve();
+  });
+}
+
+/* =====================================================================
+   GRAVAÇÃO (Speaking)
+   ===================================================================== */
+let micStream = null;
+async function pedirMic() {
+  if (micStream) return true;
+  try { micStream = await navigator.mediaDevices.getUserMedia({ audio: true }); return true; }
+  catch { return false; }
+}
+function gravar(segundos, onTick) {
+  return new Promise(resolve => {
+    if (!micStream || typeof MediaRecorder === 'undefined') {
+      let r = segundos; const iv = setInterval(() => { r--; onTick && onTick(r); if (r <= 0) { clearInterval(iv); resolve(null); } }, 1000);
+      state.pararGravacao = () => { clearInterval(iv); resolve(null); };
+      return;
+    }
+    const chunks = []; const rec = new MediaRecorder(micStream);
+    rec.ondataavailable = e => e.data.size && chunks.push(e.data);
+    rec.onstop = () => resolve(new Blob(chunks, { type: rec.mimeType || 'audio/webm' }));
+    rec.start();
+    let r = segundos; onTick && onTick(r);
+    const iv = setInterval(() => { r--; onTick && onTick(r); if (r <= 0) { clearInterval(iv); if (rec.state !== 'inactive') rec.stop(); } }, 1000);
+    state.pararGravacao = () => { clearInterval(iv); if (rec.state !== 'inactive') rec.stop(); };
+  });
+}
+
+/* =====================================================================
+   ESTADO DA PROVA
+   ===================================================================== */
+const state = {};
+let timerIv = null;
+
+function iniciar(modo, ref) {
+  // modo: 'habilidade' (ref = {sec, id}) ou 'completo' (ref = objeto de COMPLETOS)
+  Object.keys(state).forEach(k => delete state[k]);
+  state.modo = modo;
+  if (modo === 'habilidade') {
+    state.secoes = [{ sec: ref.sec, id: ref.id }];
+    state.titulo = BANCO[ref.sec][ref.id].titulo;
+    state.simId = ref.id;
+  } else {
+    state.secoes = ORDEM.map(sec => ({ sec, id: ref[sec] }));
+    state.titulo = ref.titulo; state.simId = ref.id;
+  }
+  state.iSec = 0; state.resultados = {};
+  mostrarIntroSecao();
+}
+
+function mostrarIntroSecao() {
+  const { sec, id } = state.secoes[state.iSec];
+  const cfg = SECOES[sec]; const s = BANCO[sec][id];
+  $('intro-brand').textContent = state.modo === 'completo' ? `${state.titulo} · Seção ${state.iSec + 1} de 4` : 'Simulado por habilidade';
+  $('intro-title').textContent = `${cfg.emoji} ${cfg.nome}`;
+  $('intro-text').textContent = s.titulo + (cfg.tempo ? ` · ${Math.round(cfg.tempo / 60)} minutos` : '');
+  const tipos = [...new Set((s.modulos ? [...s.modulos.base, ...(s.modulos.dificil || []), ...(s.modulos.facil || [])] : s.itens).map(b => b.tipo))];
+  let html = '<p style="margin-bottom:10px"><b>Nesta seção:</b></p><ul style="padding-left:20px;margin-bottom:12px">' + tipos.map(t => `<li>${TIPOS[t].nome}</li>`).join('') + '</ul>';
+  if (s.modulos) html += '<p class="note">Seção adaptativa: a segunda parte fica mais difícil ou mais fácil de acordo com o seu desempenho na primeira. Não dá para voltar para a questão anterior.</p>';
+  if (sec === 'listening') html += `<p class="note mt">🎧 Use fone de ouvido. Cada áudio pode ser ouvido ${OUVIR_MAX[state.modo]}x.</p>`;
+  if (sec === 'writing') html += '<p class="note">O e-mail e o post da discussão têm tempo próprio (7 e 10 min) e passam sozinhos quando o tempo acaba.</p>';
+  if (sec === 'speaking') html += '<p class="note">🎙️ O navegador vai pedir acesso ao microfone. A gravação começa sozinha depois do áudio.</p>';
+  $('intro-body').innerHTML = html;
+  $('intro-voltar').style.display = state.iSec === 0 ? '' : 'none';
+  show('screen-intro');
+}
+
+async function comecarSecao() {
+  const { sec, id } = state.secoes[state.iSec];
+  if (sec === 'speaking') {
+    const ok = await pedirMic();
+    if (!ok && !confirm('Não consegui acessar o microfone. Você pode continuar, mas sua fala não será gravada. Continuar mesmo assim?')) return;
+  }
+  const s = BANCO[sec][id];
+  state.sec = sec; state.secDados = s;
+  state.res = { sec, id, titulo: s.titulo, itens: [], textos: [], gravacoes: [], caminho: s.modulos ? 'base' : null };
+  state.modulo = 'base';
+  state.telas = montarTelas(s.modulos ? s.modulos.base : s.itens);
+  state.iTela = 0;
+  state.fimSecao = SECOES[sec].tempo ? Date.now() + SECOES[sec].tempo * 1000 : null;
+  show('screen-exam');
+  iniciarTimerSecao();
+  renderTela();
+}
+
+/* Transforma blocos em telas (uma por frase, uma por pergunta de entrevista etc.) */
+function montarTelas(blocos) {
+  const telas = [];
+  (blocos || []).forEach(b => {
+    if (b.tipo === 'entrevista') b.perguntas.forEach((p, i) => telas.push({ ...b, pergunta: p, nPergunta: i + 1, totalPerguntas: b.perguntas.length }));
+    else telas.push(b);
+  });
+  return telas;
+}
+
+function iniciarTimerSecao() {
+  clearInterval(timerIv);
+  const tick = () => {
+    const t = state.fimTarefa || state.fimSecao;
+    const el = $('tb-timer');
+    if (!t) { el.textContent = '—'; el.classList.remove('low'); return; }
+    const rest = (t - Date.now()) / 1000;
+    el.textContent = fmt(rest); el.classList.toggle('low', rest < 60);
+    if (state.fimSecao && Date.now() >= state.fimSecao) { clearInterval(timerIv); tempoEsgotado('secao'); }
+    else if (state.fimTarefa && Date.now() >= state.fimTarefa) { state.fimTarefa = null; tempoEsgotado('tarefa'); }
+  };
+  tick(); timerIv = setInterval(tick, 500);
+}
+function tempoEsgotado(qual) {
+  coletarTela();
+  if (qual === 'secao') { alert('⏰ O tempo desta seção acabou.'); state.telas = state.telas.slice(0, state.iTela + 1); state.semModulo2 = true; }
+  avancar(true);
+}
+
+/* =====================================================================
+   RENDER DAS TELAS
+   ===================================================================== */
+function renderTela() {
+  pararAudio();
+  const tela = state.telas[state.iTela]; const tipo = TIPOS[tela.tipo];
+  const cfg = SECOES[state.sec];
+  $('tb-sec').textContent = `${cfg.emoji} ${cfg.nome}` + (state.secDados.modulos ? ` · Módulo ${state.modulo === 'base' ? 1 : 2}` : '');
+  $('tb-sub').textContent = `${tipo.nome} · ${state.iTela + 1} de ${state.telas.length}`;
+  $('tb-prog').style.width = ((state.iTela) / state.telas.length * 100) + '%';
+  state.fimTarefa = tela.tempo && (tela.tipo === 'email' || tela.tipo === 'discussao') ? Date.now() + tela.tempo * 1000 : null;
+  state.resp = {}; state.ouvidas = 0;
+  const btn = $('btn-next'); btn.disabled = false; btn.style.display = '';
+  btn.textContent = (state.iTela === state.telas.length - 1) ? 'Concluir parte →' : 'Próxima →';
+
+  let h = `<div class="tasklabel">${tipo.nome}</div><p class="instr">${tipo.instr}</p>`;
+  const st = $('stage');
+
+  if (tela.tipo === 'completar') {
+    let k = 0;
+    const html = esc(tela.texto).replace(/\{\{([^|}]*)\|([^}]*)\}\}/g, (m, mostra, falta) => {
+      const vis = mostra.slice(0, mostra.length - falta.length);
+      const w = Math.max(2, falta.length) * 0.72 + 0.6;
+      return `${vis}<input data-k="${k++}" maxlength="${falta.length}" style="width:${w}em" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="missing letters">`;
+    });
+    h += `<div class="passage cw">${html}</div>`;
+    st.innerHTML = h;
+  }
+  else if (tela.tipo === 'diaria' || tela.tipo === 'academica') {
+    h += `<div class="passage">${tela.titulo ? `<h3>${esc(tela.titulo)}</h3>` : ''}${esc(tela.texto)}</div>` + questoesHTML(tela.questoes);
+    st.innerHTML = h; ligarOpcoes();
+  }
+  else if (tela.tipo === 'resposta') {
+    h += audioBoxHTML() + `<div id="qs" style="display:none">` + questoesHTML([{ enunciado: 'Choose the best response.', opcoes: tela.opcoes }]) + '</div>';
+    st.innerHTML = h; ligarOpcoes(); ligarAudio(tela.audio, tela.transcricao, () => $('qs').style.display = '');
+  }
+  else if (['conversa', 'aviso', 'palestra'].includes(tela.tipo)) {
+    h += audioBoxHTML() + `<div id="qs" style="display:none">` + questoesHTML(tela.questoes) + '</div>';
+    st.innerHTML = h; ligarOpcoes(); ligarAudio(tela.audio, tela.transcricao, () => $('qs').style.display = '');
+  }
+  else if (tela.tipo === 'frase') {
+    state.ordem = []; state.tiles = shuffle(tela.palavras.map((w, i) => ({ w, i })));
+    h += `<div class="post prof"><b>Speaker A</b>${esc(tela.contexto)}</div><div class="post"><b>You</b></div>
+          <div class="built" id="built"></div><div class="tiles" id="tiles"></div>
+          <button class="btn ghost sm" id="limpar">↺ Recomeçar</button>`;
+    st.innerHTML = h; renderFrase(tela);
+    $('limpar').onclick = () => { state.ordem = []; renderFrase(tela); };
+  }
+  else if (tela.tipo === 'email') {
+    h += `<div class="passage" style="white-space:normal">${esc(tela.situacao)}<br><br><b>In your email, do the following:</b><ul style="padding-left:20px;margin-top:6px">${tela.tarefas.map(t => `<li>${esc(t)}</li>`).join('')}</ul>${tela.para ? `<p class="note mt">To: ${esc(tela.para)}</p>` : ''}</div>
+          <textarea id="txt" placeholder="Write your email here..." spellcheck="false"></textarea><div class="wc" id="wc">0 words</div>`;
+    st.innerHTML = h; ligarTexto();
+  }
+  else if (tela.tipo === 'discussao') {
+    h += `<div class="passage" style="white-space:normal"><div class="post prof"><b>Professor</b>${esc(tela.professor)}</div>${tela.alunos.map(a => `<div class="post"><b>${esc(a.nome)}</b>${esc(a.texto)}</div>`).join('')}</div>
+          <textarea id="txt" placeholder="Write your post here (aim for 100+ words)..." spellcheck="false"></textarea><div class="wc" id="wc">0 words</div>`;
+    st.innerHTML = h; ligarTexto();
+  }
+  else if (tela.tipo === 'repetir' || tela.tipo === 'entrevista') {
+    const ent = tela.tipo === 'entrevista';
+    if (ent && tela.contexto && tela.nPergunta === 1) h += `<div class="passage" style="white-space:normal">${esc(tela.contexto)}</div>`;
+    if (ent) h = h.replace('</div>', ` · Question ${tela.nPergunta} of ${tela.totalPerguntas}</div>`);
+    h += `<div class="audiobox"><div class="big" id="ab-ic">🔊</div><div id="ab-main">Clique para ouvir</div><button class="btn mt" id="ab-play">▶ Ouvir</button><div class="st" id="ab-st"></div></div>`;
+    st.innerHTML = h; btn.disabled = true;
+    const src = ent ? tela.pergunta.audio : tela.audio, txt = ent ? tela.pergunta.texto : tela.transcricao;
+    $('ab-play').onclick = async () => {
+      $('ab-play').style.display = 'none'; $('ab-main').textContent = 'Ouvindo...';
+      await tocar(src, txt);
+      $('ab-ic').textContent = '🎙️';
+      $('ab-main').innerHTML = '<span class="rec"><i></i> Gravando</span>';
+      $('ab-st').innerHTML = '<button class="btn sm ghost" id="ab-stop" style="color:#fff;border-color:#555">Terminei</button>';
+      $('ab-stop').onclick = () => state.pararGravacao && state.pararGravacao();
+      const blob = await gravar(tela.tempo || (ent ? 45 : 12), r => { const m = $('ab-main'); if (m && r >= 0) m.innerHTML = `<span class="rec"><i></i> Gravando · ${r}s</span>`; });
+      state.resp.blob = blob; state.resp.prompt = txt;
+      $('ab-ic').textContent = '✅'; $('ab-main').textContent = 'Resposta gravada'; $('ab-st').textContent = '';
+      btn.disabled = false;
+    };
+  }
+}
+
+function questoesHTML(qs) {
+  return qs.map((q, qi) => `<div class="q"><div class="en">${qs.length > 1 ? (qi + 1) + '. ' : ''}${esc(q.enunciado)}</div>` +
+    q.opcoes.map((o, oi) => `<button class="opt" data-q="${qi}" data-o="${oi}"><span class="l">${LETRAS[oi]}</span><span>${esc(o)}</span></button>`).join('') + '</div>').join('');
+}
+function ligarOpcoes() {
+  document.querySelectorAll('#stage .opt').forEach(b => b.onclick = () => {
+    const q = b.dataset.q; state.resp[q] = +b.dataset.o;
+    document.querySelectorAll(`#stage .opt[data-q="${q}"]`).forEach(x => x.classList.toggle('sel', x === b));
+  });
+}
+function audioBoxHTML() { return `<div class="audiobox"><div class="big">🎧</div><div id="ab-main">Clique para ouvir o áudio</div><button class="btn mt" id="ab-play">▶ Ouvir</button><div class="st" id="ab-st"></div></div>`; }
+function ligarAudio(src, txt, depois) {
+  const max = OUVIR_MAX[state.modo];
+  $('ab-play').onclick = async () => {
+    state.ouvidas++; $('ab-play').disabled = true; $('ab-main').textContent = 'Ouvindo...';
+    await tocar(src, txt);
+    if (!$('ab-play')) return;
+    $('ab-main').textContent = 'Agora responda abaixo.';
+    const rest = max - state.ouvidas;
+    if (rest > 0) { $('ab-play').disabled = false; $('ab-play').textContent = `↻ Ouvir de novo (${rest})`; }
+    else $('ab-play').style.display = 'none';
+    $('ab-st').textContent = `Ouvido ${state.ouvidas} de ${max}`;
+    depois();
+  };
+}
+function renderFrase(tela) {
+  const built = $('built'), tiles = $('tiles');
+  built.innerHTML = (tela.inicio ? `<span class="fixed">${esc(tela.inicio)}</span>` : '') +
+    state.ordem.map((t, pos) => `<button class="tile" data-pos="${pos}">${esc(t.w)}</button>`).join('') +
+    (state.ordem.length === 0 && !tela.inicio ? '<span class="note">Toque nas palavras abaixo na ordem certa</span>' : '');
+  tiles.innerHTML = state.tiles.map(t => `<button class="tile ${state.ordem.includes(t) ? 'used' : ''}" data-i="${t.i}">${esc(t.w)}</button>`).join('');
+  tiles.querySelectorAll('.tile').forEach(b => b.onclick = () => { state.ordem.push(state.tiles.find(t => t.i === +b.dataset.i)); renderFrase(tela); });
+  built.querySelectorAll('.tile').forEach(b => b.onclick = () => { state.ordem.splice(+b.dataset.pos, 1); renderFrase(tela); });
+}
+function ligarTexto() {
+  const t = $('txt'); t.oninput = () => $('wc').textContent = contaPalavras(t.value) + ' words';
+  t.addEventListener('paste', e => e.preventDefault()); t.focus();
+}
+
+/* Lê a resposta da tela atual e registra no resultado da seção */
+function coletarTela() {
+  const tela = state.telas[state.iTela]; if (!tela || tela._coletada) return;
+  tela._coletada = true;
+  const R = state.res; const nome = TIPOS[tela.tipo].nome;
+  if (tela.tipo === 'completar') {
+    const faltas = [...tela.texto.matchAll(/\{\{([^|}]*)\|([^}]*)\}\}/g)];
+    document.querySelectorAll('#stage .cw input').forEach((inp, k) => {
+      const [, mostra, falta] = faltas[k];
+      const ok = norm(inp.value) === norm(falta);
+      R.itens.push({ tipo: tela.tipo, nome, ok, enunciado: mostra, dada: mostra.slice(0, mostra.length - falta.length) + (inp.value || '___'), correta: mostra, modulo: state.modulo });
+    });
+  } else if (tela.questoes || tela.tipo === 'resposta') {
+    const qs = tela.questoes || [{ enunciado: 'Choose the best response.', opcoes: tela.opcoes, correta: tela.correta }];
+    qs.forEach((q, qi) => {
+      const d = state.resp[qi];
+      R.itens.push({ tipo: tela.tipo, nome, ok: d === q.correta, enunciado: tela.tipo === 'resposta' ? `"${tela.transcricao}"` : q.enunciado,
+        dada: d == null ? '(em branco)' : LETRAS[d] + ') ' + q.opcoes[d], correta: LETRAS[q.correta] + ') ' + q.opcoes[q.correta], modulo: state.modulo });
+    });
+  } else if (tela.tipo === 'frase') {
+    const frase = state.ordem.map(t => t.w).join(' ');
+    const completa = ((tela.inicio ? tela.inicio + ' ' : '') + frase).trim();
+    const certa = ((tela.inicio ? tela.inicio + ' ' : '') + tela.resposta).trim();
+    R.itens.push({ tipo: tela.tipo, nome, ok: norm(frase) === norm(tela.resposta), enunciado: tela.contexto, dada: completa || '(em branco)', correta: certa });
+  } else if (tela.tipo === 'email' || tela.tipo === 'discussao') {
+    const txt = ($('txt') && $('txt').value) || '';
+    R.textos.push({ tipo: tela.tipo, nome, prompt: tela.tipo === 'email' ? tela.situacao : tela.professor, texto: txt, palavras: contaPalavras(txt) });
+  } else if (tela.tipo === 'repetir' || tela.tipo === 'entrevista') {
+    R.gravacoes.push({ tipo: tela.tipo, nome, prompt: state.resp.prompt || (tela.pergunta ? tela.pergunta.texto : tela.transcricao), blob: state.resp.blob || null });
+  }
+}
+
+function avancar(forcado) {
+  if (!forcado) {
+    const tela = state.telas[state.iTela];
+    const nq = tela.questoes ? tela.questoes.length : (tela.tipo === 'resposta' ? 1 : 0);
+    if (nq && Object.keys(state.resp).length < nq && !confirm('Há perguntas sem resposta. Avançar mesmo assim? (não dá para voltar)')) return;
+    if (state.pararGravacao) state.pararGravacao = null;
+    coletarTela();
+  }
+  pararAudio();
+  if (state.iTela < state.telas.length - 1) { state.iTela++; renderTela(); return; }
+  // fim do módulo: decide módulo 2 (adaptativo)
+  const m = state.secDados.modulos;
+  if (m && state.modulo === 'base' && !state.semModulo2) {
+    const base = state.res.itens.filter(i => i.modulo === 'base');
+    const pct = base.length ? base.filter(i => i.ok).length / base.length : 0;
+    const prox = pct >= CORTE_ADAPTATIVO ? 'dificil' : 'facil';
+    if ((m[prox] || []).length) {
+      state.modulo = prox; state.res.caminho = prox;
+      state.telas = montarTelas(m[prox]); state.iTela = 0;
+      alert('✔ Módulo 1 concluído. Começando o módulo 2.');
+      renderTela(); return;
+    }
+  }
+  fecharSecao();
+}
+
+function fecharSecao() {
+  clearInterval(timerIv); state.fimTarefa = null; state.semModulo2 = false;
+  const R = state.res;
+  const auto = R.itens; const ac = auto.filter(i => i.ok).length;
+  R.acertos = ac; R.total = auto.length;
+  if (R.sec === 'reading' || R.sec === 'listening') R.banda = auto.length ? banda(ac / auto.length, R.caminho) : null;
+  state.resultados[R.sec] = R;
+  state.iSec++;
+  if (state.iSec < state.secoes.length) mostrarIntroSecao();
+  else finalizar();
+}
+
+/* =====================================================================
+   RESULTADO
+   ===================================================================== */
+function porTipo(itens) {
+  const m = {};
+  itens.forEach(i => { m[i.nome] = m[i.nome] || { a: 0, t: 0 }; m[i.nome].t++; if (i.ok) m[i.nome].a++; });
+  return m;
+}
+
+async function finalizar() {
+  const res = state.resultados;
+  const bandas = ORDEM.filter(s => res[s] && res[s].banda != null).map(s => res[s].banda);
+  const geral = bandas.length ? media05(bandas) : null;
+  const registro = {
+    data: new Date().toLocaleDateString('pt-BR'), quando: Date.now(), simulado: state.titulo, simId: state.simId, modo: state.modo,
+    reading: res.reading ? res.reading.banda : null, listening: res.listening ? res.listening.banda : null,
+    geralParcial: geral,
+    porTipo: porTipo(Object.values(res).flatMap(r => r.itens)),
+  };
+  salvarHistorico(registro);
+
+  $('res-title').textContent = state.titulo;
+  $('res-sub').textContent = `${aluno()} · ${registro.data}`;
+  let b = '';
+  ORDEM.forEach(s => {
+    const r = res[s]; if (!r) return;
+    if (r.banda != null) b += `<div class="band"><div class="n">${r.banda.toFixed(1)}</div><div class="k">${SECOES[s].nome}</div><div class="s">${r.acertos}/${r.total} acertos${r.caminho && r.caminho !== 'base' ? ' · módulo ' + (r.caminho === 'dificil' ? 'difícil' : 'fácil') : ''}</div></div>`;
+    else b += `<div class="band"><div class="n">⏳</div><div class="k">${SECOES[s].nome}</div><div class="s">correção da Denise</div></div>`;
+  });
+  if (state.modo === 'completo' && geral != null) b = `<div class="band main"><div class="n">${geral.toFixed(1)}</div><div class="k">Geral (parcial)</div><div class="s">média de Reading e Listening</div></div>` + b;
+  $('res-bands').innerHTML = b;
+
+  let h = '<div class="card"><p class="note">As notas de 1 a 6 são uma <b>estimativa</b> com base nos seus acertos, não a tabela oficial da ETS. Writing e Speaking são corrigidos pela Denise.</p></div>';
+  ORDEM.forEach(s => {
+    const r = res[s]; if (!r) return;
+    h += `<div class="card"><h2 style="font-size:22px;margin-bottom:8px">${SECOES[s].emoji} ${SECOES[s].nome}</h2>`;
+    const pt = porTipo(r.itens);
+    Object.entries(pt).forEach(([n, v]) => { const p = Math.round(v.a / v.t * 100); h += `<div class="bar"><span class="nm">${esc(n)}</span><span class="tr"><i style="width:${p}%"></i></span><span class="pc">${v.a}/${v.t}</span></div>`; });
+    const erros = r.itens.filter(i => !i.ok);
+    if (erros.length) {
+      h += `<details class="mt"><summary style="cursor:pointer;font-weight:700">Onde você errou (${erros.length})</summary>`;
+      erros.forEach(i => h += `<div class="rev"><div class="note">${esc(i.nome)}</div><div>${esc(i.enunciado)}</div><div><span class="bad">Você:</span> ${esc(i.dada)}</div><div><span class="ok">Certo:</span> ${esc(i.correta)}</div></div>`);
+      h += '</details>';
+    } else if (r.itens.length) h += '<p class="mt" style="color:var(--ok);font-weight:700">Tudo certo nas questões objetivas! 🎉</p>';
+    r.textos.forEach(t => h += `<div class="mt"><b>${esc(t.nome)}</b> <span class="note">· ${t.palavras} palavras</span><div class="passage mt" style="font-size:15px">${esc(t.texto) || '<span class="note">(em branco)</span>'}</div></div>`);
+    if (r.gravacoes.length) {
+      h += '<p class="mt"><b>Suas gravações</b></p>';
+      r.gravacoes.forEach((g, gi) => {
+        if (g.blob) { const url = URL.createObjectURL(g.blob); h += `<div class="rev"><div class="note">${esc(g.nome)} · "${esc(g.prompt)}"</div><audio controls src="${url}" style="width:100%;margin-top:6px"></audio><a href="${url}" download="${esc(chaveAluno().replace(/ /g, '_'))}_speaking_${gi + 1}.webm" class="note">⬇ baixar</a></div>`; }
+        else h += `<div class="rev note">${esc(g.nome)} · sem gravação (microfone indisponível)</div>`;
+      });
+    }
+    h += '</div>';
+  });
+  $('res-body').innerHTML = h;
+  show('screen-result');
+  enviar(registro, res);
+}
+
+async function subirAudio(blob, nome) {
+  if (!CLOUDINARY_CLOUD || !CLOUDINARY_PRESET || !blob) return null;
+  try {
+    const fd = new FormData(); fd.append('file', blob, nome + '.webm'); fd.append('upload_preset', CLOUDINARY_PRESET); fd.append('folder', 'toefl-speaking');
+    const r = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/video/upload`, { method: 'POST', body: fd });
+    const j = await r.json(); return j.secure_url || null;
+  } catch { return null; }
+}
+
+async function enviar(registro, res) {
+  const st = $('res-envio'); st.textContent = 'Enviando resultado para a Denise...';
+  const secoes = {};
+  for (const s of ORDEM) {
+    const r = res[s]; if (!r) continue;
+    const grav = [];
+    for (let i = 0; i < r.gravacoes.length; i++) {
+      const g = r.gravacoes[i];
+      grav.push({ nome: g.nome, prompt: g.prompt, url: await subirAudio(g.blob, `${chaveAluno().replace(/ /g, '_')}_${state.simId}_${i + 1}`) });
+    }
+    secoes[s] = { titulo: r.titulo, banda: r.banda ?? null, acertos: r.acertos, total: r.total, caminho: r.caminho,
+      porTipo: porTipo(r.itens), erros: r.itens.filter(i => !i.ok).map(i => `${i.nome}: ${i.enunciado} → ${i.dada} (certo: ${i.correta})`),
+      textos: r.textos.map(t => ({ nome: t.nome, prompt: t.prompt, texto: t.texto, palavras: t.palavras })), gravacoes: grav };
+  }
+  try {
+    const r = await fetch(NOTION_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ aluno: aluno(), simulado: state.titulo, modo: state.modo, geral: registro.geralParcial, secoes }) });
+    if (!r.ok) throw 0;
+    st.textContent = '✓ Resultado enviado para a Denise.';
+  } catch {
+    st.textContent = '⚠ Não foi possível enviar agora. Sua nota ficou salva neste aparelho' + (Object.values(res).some(r => r.gravacoes.length) ? ' — baixe suas gravações e mande para a Denise pelo WhatsApp.' : '.');
+  }
+}
+
+/* =====================================================================
+   HOME
+   ===================================================================== */
+function ultimoResultado(simId) { return historico().find(h => h.simId === simId); }
+
+function renderHome() {
+  $('ola').textContent = `Hi, ${aluno().split(' ')[0]}! 👋`;
+  // por habilidade
+  let h = '';
+  ORDEM.forEach(sec => {
+    const cfg = SECOES[sec];
+    h += `<div class="skillrow"><div class="skillhead"><h2>${cfg.emoji} ${cfg.nome}</h2><span>${cfg.tempo ? Math.round(cfg.tempo / 60) + ' min' : '≈ 8 min'}</span></div><div class="grid">`;
+    Object.entries(BANCO[sec]).forEach(([id, s]) => {
+      const n = itensDaSecao(sec, id); const u = ultimoResultado(id);
+      const nota = u ? (u[sec] != null ? `Última nota: ${u[sec].toFixed(1)}` : `Feito em ${u.data}`) : '';
+      h += `<button class="slot" ${n ? '' : 'disabled'} data-sec="${sec}" data-id="${id}"><div><div class="t">${esc(s.titulo)}</div>${s.demo ? '<span class="tag">demo</span>' : ''}</div>
+            <div>${n ? `<div class="score">${nota}</div><div class="m">${nota ? 'Fazer de novo' : 'Começar →'}</div>` : '<div class="m">Em breve</div>'}</div></button>`;
+    });
+    h += '</div></div>';
+  });
+  $('pane-skill').innerHTML = h;
+  $('pane-skill').querySelectorAll('.slot:not(:disabled)').forEach(b => b.onclick = () => iniciar('habilidade', { sec: b.dataset.sec, id: b.dataset.id }));
+
+  // completos
+  h = '<p class="note" style="margin-bottom:14px">Reading → Listening → Writing → Speaking, na ordem e com os tempos da prova oficial (cerca de 1h30). Separe um momento sem interrupções e use fone de ouvido.</p><div class="grid">';
+  COMPLETOS.forEach(c => {
+    const ok = completoPronto(c); const u = ultimoResultado(c.id);
+    h += `<button class="slot big" ${ok ? '' : 'disabled'} data-id="${c.id}"><div><div class="t">${esc(c.titulo)}</div>${c.demo ? '<span class="tag">demo</span>' : ''}</div>
+          <div>${ok ? `<div class="score">${u && u.geralParcial != null ? 'Última nota: ' + u.geralParcial.toFixed(1) : ''}</div><div class="m">≈ 1h30 · 4 seções</div>` : '<div class="m">Em breve</div>'}</div></button>`;
+  });
+  $('pane-full').innerHTML = h + '</div>';
+  $('pane-full').querySelectorAll('.slot:not(:disabled)').forEach(b => b.onclick = () => {
+    if (confirm('O simulado completo leva cerca de 1h30 e não pode ser pausado. Começar agora?')) iniciar('completo', COMPLETOS.find(c => c.id === b.dataset.id));
+  });
+
+  renderDados();
+}
+
+function renderDados() {
+  const hist = historico();
+  if (!hist.length) { $('pane-data').innerHTML = '<div class="card center"><p style="font-size:34px">📊</p><p>Seus resultados aparecem aqui depois do primeiro simulado.</p></div>'; return; }
+  const agg = {};
+  hist.forEach(r => Object.entries(r.porTipo || {}).forEach(([n, v]) => { agg[n] = agg[n] || { a: 0, t: 0 }; agg[n].a += v.a; agg[n].t += v.t; }));
+  let h = '<div class="card"><h2 style="font-size:22px;margin-bottom:4px">Acertos por tipo de tarefa</h2><p class="note" style="margin-bottom:10px">Somando todos os simulados. As barras mais curtas mostram o que treinar.</p>';
+  Object.entries(agg).sort((a, b) => a[1].a / a[1].t - b[1].a / b[1].t).forEach(([n, v]) => {
+    const p = Math.round(v.a / v.t * 100); h += `<div class="bar"><span class="nm">${esc(n)}</span><span class="tr"><i style="width:${p}%"></i></span><span class="pc">${p}%</span></div>`;
+  });
+  h += '</div><div class="card"><h2 style="font-size:22px;margin-bottom:8px">Histórico</h2><table><tr><th>Data</th><th>Simulado</th><th>R</th><th>L</th><th>Geral</th></tr>';
+  hist.forEach(r => h += `<tr><td>${r.data}</td><td>${esc(r.simulado)}</td><td>${r.reading != null ? r.reading.toFixed(1) : '—'}</td><td>${r.listening != null ? r.listening.toFixed(1) : '—'}</td><td>${r.modo === 'completo' && r.geralParcial != null ? r.geralParcial.toFixed(1) : '—'}</td></tr>`);
+  $('pane-data').innerHTML = h + '</table></div>';
+}
+
+/* =====================================================================
+   EVENTOS
+   ===================================================================== */
+$('btn-entrar').onclick = () => {
+  const n = $('nome').value.trim();
+  if (n.split(/\s+/).length < 2) { alert('Digite seu nome e sobrenome.'); return; }
+  localStorage.setItem('toefl_aluno', n); renderHome(); show('screen-home');
+};
+$('nome').addEventListener('keydown', e => e.key === 'Enter' && $('btn-entrar').click());
+$('btn-sair').onclick = () => { localStorage.removeItem('toefl_aluno'); $('nome').value = ''; show('screen-login'); };
+document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t));
+  document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === t.dataset.pane));
+});
+$('intro-voltar').onclick = () => { renderHome(); show('screen-home'); };
+$('intro-go').onclick = comecarSecao;
+$('btn-next').onclick = () => avancar(false);
+$('btn-home').onclick = () => { pararAudio(); renderHome(); show('screen-home'); };
+window.addEventListener('beforeunload', e => { if ($('screen-exam').classList.contains('on')) { e.preventDefault(); e.returnValue = ''; } });
+if ('speechSynthesis' in window) speechSynthesis.getVoices();
+if (aluno()) { renderHome(); show('screen-home'); }
+</script>
+</body>
+</html>
