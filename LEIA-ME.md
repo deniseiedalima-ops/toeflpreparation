@@ -97,6 +97,10 @@ Adicione na Vercel `OPENAI_API_KEY` (a mesma chave da OpenAI do seu app) e faça
 - Opcional: `OPENAI_MODEL` (padrão `gpt-4o-mini`) e `OPENAI_TRANSCRIBE_MODEL` (padrão `whisper-1`).
 Sem a chave, tudo continua funcionando e a correção fica com você.
 
+## Avaliação de pronúncia (Azure AI Speech)
+Com `AZURE_SPEECH_KEY` e `AZURE_SPEECH_REGION` na Vercel (além da `OPENAI_API_KEY`), cada gravação do Speaking recebe notas de pronúncia, precisão, fluência e entonação, e o aluno vê palavra por palavra o que pronunciou errado ou pulou. As palavras para treinar podem ser ouvidas com a pronúncia correta. A nota de Speaking passa a considerar a pronúncia.
+Como criar: portal.azure.com → Criar um recurso → **Speech** → plano **Free F0** → depois de criado, abra **Chaves e Ponto de Extremidade** e copie a **Chave 1** e o **Local/Região** (ex.: `brazilsouth` ou `eastus`).
+
 ## Áudios do Listening e do Speaking
 A plataforma escolhe o áudio nesta ordem:
 1. **Arquivo MP3 gravado por você**, quando a questão tem um `audio` (ex.: `audio: '/audios/L2-conversa.mp3'`). Os arquivos ficam na pasta `audios/` do repositório.

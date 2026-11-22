@@ -412,6 +412,51 @@ async function transcrever(body) {
   return { texto: (j.text || '').trim() };
 }
 
+/* ---------- Avaliação de pronúncia (Azure AI Speech) ----------
+   Variáveis: AZURE_SPEECH_KEY e AZURE_SPEECH_REGION (ex.: brazilsouth, eastus) */
+async function avaliarPronuncia(body) {
+  const chave = env('AZURE_SPEECH_KEY'), regiao = env('AZURE_SPEECH_REGION');
+  if (!chave || !regiao) throw new Error('Avaliação de pronúncia desligada (faltam AZURE_SPEECH_KEY e AZURE_SPEECH_REGION)');
+  const buf = Buffer.from(String(body.audio || ''), 'base64');
+  if (buf.length < 1000) return { vazio: true };
+  if (buf.length > 3 * 1024 * 1024) throw new Error('Gravação grande demais');
+  const referencia = cut(String(body.referencia || '').trim(), 1000);
+  const roteiro = body.modo === 'repetir';
+  const params = {
+    ReferenceText: referencia, GradingSystem: 'HundredMark', Granularity: 'Phoneme', Dimension: 'Comprehensive',
+    EnableMiscue: roteiro && !!referencia, EnableProsodyAssessment: true,
+  };
+  const url = `https://${regiao}.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed`;
+  const r = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Ocp-Apim-Subscription-Key': chave,
+      'Content-Type': 'audio/wav; codecs=audio/pcm; samplerate=16000',
+      'Accept': 'application/json',
+      'Pronunciation-Assessment': Buffer.from(JSON.stringify(params)).toString('base64'),
+    },
+    body: buf,
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error('Pronúncia: ' + (j.error && j.error.message || j.Message || r.status));
+  if (j.RecognitionStatus && j.RecognitionStatus !== 'Success') return { vazio: true, status: j.RecognitionStatus };
+  const n = (j.NBest || [])[0] || {};
+  const pa = n.PronunciationAssessment || n;
+  const nota = k => typeof pa[k] === 'number' ? Math.round(pa[k]) : null;
+  const palavras = (n.Words || []).map(w => {
+    const wa = w.PronunciationAssessment || w;
+    return { palavra: w.Word, nota: typeof wa.AccuracyScore === 'number' ? Math.round(wa.AccuracyScore) : null, erro: wa.ErrorType || 'None' };
+  });
+  return {
+    ouvido: j.DisplayText || n.Display || '',
+    pronuncia: nota('PronScore'), precisao: nota('AccuracyScore'), fluencia: nota('FluencyScore'),
+    completude: nota('CompletenessScore'), entonacao: nota('ProsodyScore'),
+    palavras: palavras.slice(0, 120),
+  };
+}
+const bandaPronuncia = p => p >= 92 ? 6 : p >= 86 ? 5.5 : p >= 80 ? 5 : p >= 74 ? 4.5 : p >= 67 ? 4 : p >= 60 ? 3.5 : p >= 52 ? 3 : p >= 44 ? 2.5 : p >= 36 ? 2 : p >= 25 ? 1.5 : 1;
+const ERRO_PT = { Mispronunciation: 'pronúncia', Omission: 'pulou', Insertion: 'a mais', UnexpectedBreak: 'pausa inesperada', MissingBreak: 'faltou pausa', Monotone: 'monótona' };
+
 // Precisão do Listen and Repeat: maior sequência comum de palavras (LCS) / tamanho da frase.
 const palavras = t => String(t || '').toLowerCase().replace(/[^a-z0-9' ]+/g, ' ').split(/\s+/).filter(Boolean);
 function precisao(original, ouvido) {
@@ -466,25 +511,41 @@ async function corrigir(body, sessao) {
   if (!dono || dono.toLowerCase() !== sessao.email) throw new Error('Este resultado não é seu');
 
   const textos = (body.textos || []).slice(0, 4).map(t => ({ nome: cut(t.nome, 80), prompt: cut(t.prompt, 1500), texto: cut(t.texto, 6000) }));
-  const repetir = (body.repetir || []).slice(0, 12).map(x => ({ frase: cut(x.frase, 300), ouvido: cut(x.ouvido, 400) }));
-  const entrevista = (body.entrevista || []).slice(0, 6).map(x => ({ pergunta: cut(x.pergunta, 400), resposta: cut(x.resposta, 3000) }));
+  const limpaPron = p => p && typeof p.pronuncia === 'number' ? { pronuncia: +p.pronuncia, precisao: p.precisao, fluencia: p.fluencia, completude: p.completude, entonacao: p.entonacao, palavras: (p.palavras || []).slice(0, 120).map(w => ({ palavra: cut(w.palavra, 40), nota: w.nota, erro: cut(w.erro, 30) })) } : null;
+  const repetir = (body.repetir || []).slice(0, 12).map(x => ({ frase: cut(x.frase, 300), ouvido: cut(x.ouvido, 400), pron: limpaPron(x.pron) }));
+  const entrevista = (body.entrevista || []).slice(0, 6).map(x => ({ pergunta: cut(x.pergunta, 400), resposta: cut(x.resposta, 3000), pron: limpaPron(x.pron) }));
   repetir.forEach(x => { x.precisao = precisao(x.frase, x.ouvido); });
 
   const ia = (textos.length || entrevista.length) ? await avaliarIA(textos, entrevista) : { textos: [], entrevista: [] };
   const tIA = (ia.textos || []).map((t, i) => ({ ...textos[i], banda: meia(+t.banda || 1), comentario: t.comentario || '', correcoes: (t.correcoes || []).slice(0, 5) }));
   const eIA = (ia.entrevista || []).map((e, i) => ({ ...entrevista[i], banda: meia(+e.banda || 1), comentario: e.comentario || '' }));
+  // Pronúncia (Azure): médias e palavras para treinar
+  const todasPron = [...repetir, ...entrevista].map(x => x.pron).filter(Boolean);
+  const mediaPron = k => { const v = todasPron.map(p => p[k]).filter(x => typeof x === 'number'); return v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length) : null; };
+  const pronuncia = todasPron.length ? { pronuncia: mediaPron('pronuncia'), precisao: mediaPron('precisao'), fluencia: mediaPron('fluencia'), entonacao: mediaPron('entonacao') } : null;
+  const treinar = {};
+  todasPron.forEach(p => p.palavras.forEach(w => { if (w.erro === 'Mispronunciation' || (typeof w.nota === 'number' && w.nota < 60 && w.erro !== 'Omission')) { const k = String(w.palavra).toLowerCase().replace(/[^a-z']/g, ''); if (k) treinar[k] = Math.min(treinar[k] ?? 100, w.nota ?? 0); } }));
+  const palavrasTreinar = Object.entries(treinar).sort((a, b) => a[1] - b[1]).slice(0, 12).map(([palavra, nota]) => ({ palavra, nota }));
 
   const writing = tIA.length ? meia(tIA.reduce((s, t) => s + t.banda, 0) / tIA.length) : null;
   const precMedia = repetir.length ? repetir.reduce((s, x) => s + x.precisao, 0) / repetir.length : null;
-  const bRep = precMedia != null ? bandaRepeticao(precMedia) : null;
-  const bEnt = eIA.length ? eIA.reduce((s, e) => s + e.banda, 0) / eIA.length : null;
+  const pronRep = repetir.map(x => x.pron && x.pron.pronuncia).filter(v => typeof v === 'number');
+  const pronEnt = entrevista.map(x => x.pron && x.pron.pronuncia).filter(v => typeof v === 'number');
+  const media = v => v.reduce((a, b) => a + b, 0) / v.length;
+  let bRep = precMedia != null ? bandaRepeticao(precMedia) : null;
+  if (bRep != null && pronRep.length) bRep = (bRep + bandaPronuncia(media(pronRep))) / 2;
+  let bEnt = eIA.length ? eIA.reduce((s, e) => s + e.banda, 0) / eIA.length : null;
+  if (bEnt != null && pronEnt.length) bEnt = bEnt * 0.7 + bandaPronuncia(media(pronEnt)) * 0.3;
   const speaking = bRep != null && bEnt != null ? meia(bRep * 0.4 + bEnt * 0.6) : (bRep ?? (bEnt != null ? meia(bEnt) : null));
 
   const fbW = tIA.length ? ['🤖 Correção automática', ...tIA.map(t => `${t.nome} (${String(t.banda).replace('.', ',')}): ${t.comentario}` + (t.correcoes.length ? '\n' + t.correcoes.map(c => `• "${c.original}" → "${c.correto}" (${c.explicacao})`).join('\n') : '')), ia.dica_writing ? '👉 ' + ia.dica_writing : ''].filter(Boolean).join('\n\n') : '';
   const fbS = (repetir.length || eIA.length) ? ['🤖 Correção automática',
     repetir.length ? `Listen and Repeat: ${Math.round(precMedia * 100)}% de precisão nas frases.` : '',
     ...eIA.map((e, i) => `Pergunta ${i + 1} (${String(e.banda).replace('.', ',')}): ${e.comentario}`),
-    ia.dica_speaking ? '👉 ' + ia.dica_speaking : '', 'A IA avalia pela transcrição: pronúncia e entonação são avaliadas pela Denise quando ela revisar.'].filter(Boolean).join('\n\n') : '';
+    pronuncia ? `Pronúncia ${pronuncia.pronuncia}/100 · precisão ${pronuncia.precisao ?? '—'} · fluência ${pronuncia.fluencia ?? '—'} · entonação ${pronuncia.entonacao ?? '—'}` : '',
+    palavrasTreinar.length ? 'Palavras para treinar: ' + palavrasTreinar.map(w => w.palavra).join(', ') : '',
+    ia.dica_speaking ? '👉 ' + ia.dica_speaking : '',
+    pronuncia ? '' : 'A IA avalia pela transcrição: pronúncia e entonação são avaliadas pela Denise quando ela revisar.'].filter(Boolean).join('\n\n') : '';
 
   const props = { 'Correção': { select: { name: 'Corrigido pela IA' } } };
   if (writing != null) { props['Writing'] = { number: writing }; props['Feedback Writing'] = { rich_text: rich(fbW) }; }
@@ -493,11 +554,13 @@ async function corrigir(body, sessao) {
 
   const blocos = [bloco('heading_2', '🤖 Correção automática (IA)')];
   tIA.forEach(t => { blocos.push(bloco('heading_3', `${t.nome} · banda ${t.banda}`)); blocos.push(bloco('paragraph', t.comentario)); t.correcoes.forEach(c => blocos.push(bloco('bulleted_list_item', `"${c.original}" → "${c.correto}" — ${c.explicacao}`))); });
-  if (repetir.length) { blocos.push(bloco('heading_3', `Listen and Repeat · ${Math.round(precMedia * 100)}% de precisão`)); repetir.forEach(x => blocos.push(bloco('bulleted_list_item', `${Math.round(x.precisao * 100)}% · Frase: "${x.frase}" · Ouvido: "${x.ouvido || '(nada)'}"`))); }
+  const errosTxt = p => p ? p.palavras.filter(w => w.erro !== 'None').slice(0, 8).map(w => `${w.palavra} (${ERRO_PT[w.erro] || w.erro})`).join(', ') : '';
+  if (pronuncia) { blocos.push(bloco('heading_3', `🗣️ Pronúncia ${pronuncia.pronuncia}/100`)); blocos.push(bloco('paragraph', `Precisão ${pronuncia.precisao ?? '—'} · Fluência ${pronuncia.fluencia ?? '—'} · Entonação ${pronuncia.entonacao ?? '—'}` + (palavrasTreinar.length ? `\nPalavras para treinar: ${palavrasTreinar.map(w => w.palavra).join(', ')}` : ''))); }
+  if (repetir.length) { blocos.push(bloco('heading_3', `Listen and Repeat · ${Math.round(precMedia * 100)}% de precisão`)); repetir.forEach(x => blocos.push(bloco('bulleted_list_item', `${Math.round(x.precisao * 100)}%${x.pron ? ` · pronúncia ${x.pron.pronuncia}` : ''} · Frase: "${x.frase}" · Ouvido: "${x.ouvido || '(nada)'}"${errosTxt(x.pron) ? ' · ⚠️ ' + errosTxt(x.pron) : ''}`))); }
   if (eIA.length) { blocos.push(bloco('heading_3', 'Take an Interview · transcrições')); eIA.forEach((e, i) => { blocos.push(bloco('bulleted_list_item', `P${i + 1} (${e.banda}): ${e.pergunta}`)); blocos.push(bloco('quote', e.resposta || '(sem fala)')); blocos.push(bloco('paragraph', e.comentario)); }); }
   try { await notion(`/blocks/${id}/children`, 'PATCH', { children: blocos.slice(0, 100) }); } catch {}
 
-  return { writing, speaking, textos: tIA, repetir, entrevista: eIA, precisaoRepeticao: precMedia, dicaWriting: ia.dica_writing || '', dicaSpeaking: ia.dica_speaking || '' };
+  return { writing, speaking, textos: tIA, repetir, entrevista: eIA, precisaoRepeticao: precMedia, pronuncia, palavrasTreinar, dicaWriting: ia.dica_writing || '', dicaSpeaking: ia.dica_speaking || '' };
 }
 
 /* ---------- roteador ---------- */
@@ -505,7 +568,7 @@ module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   const acao = (req.query && req.query.acao) || 'enviar';
   try {
-    if (acao === 'config') return res.status(200).json({ googleClientId: env('GOOGLE_CLIENT_ID'), ia: !!env('OPENAI_API_KEY') });
+    if (acao === 'config') return res.status(200).json({ googleClientId: env('GOOGLE_CLIENT_ID'), ia: !!env('OPENAI_API_KEY'), pronuncia: !!(env('AZURE_SPEECH_KEY') && env('AZURE_SPEECH_REGION')) });
 
     if (acao === 'setup') {
       if (!env('SETUP_KEY') || req.query.chave !== env('SETUP_KEY')) return res.status(403).json({ error: 'Chave de setup incorreta' });
@@ -528,6 +591,7 @@ module.exports = async (req, res) => {
       res.setHeader('Cache-Control', 'private, max-age=31536000');
       return res.status(200).end(audio);
     }
+    if (acao === 'pronuncia') return res.status(200).json(await avaliarPronuncia(body));
     if (acao === 'transcrever') return res.status(200).json(await transcrever(body));
     if (acao === 'corrigir') return res.status(200).json(await corrigir(body, sessao));
     if (acao === 'painel' || acao === 'cadastrar') {

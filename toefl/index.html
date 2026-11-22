@@ -164,6 +164,15 @@ tr.fb td{background:#fff7f0;font-size:13px;color:#5a4636;border-bottom:1px solid
 .fgrid input,.fgrid select{padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);font:inherit;font-size:15px;background:#fff;color:var(--ink)}
 .prow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #eee}
 .pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);white-space:nowrap}
+.pron{border-left-color:#8b5cf6;background:#f6f2ff}
+.pmetrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-top:6px}
+.pm{background:#fff;border-radius:10px;padding:8px 10px;position:relative;overflow:hidden}
+.pm b{font-family:'DM Serif Display',serif;font-size:24px;font-weight:400}.pm small{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.pm i{position:absolute;left:0;bottom:0;height:3px;background:#8b5cf6}
+.wchips{display:flex;flex-wrap:wrap;gap:6px}
+.wchip{border:1.5px solid #d9ccff;background:#fff;border-radius:99px;padding:5px 12px;font:inherit;font-size:14px}
+.wchip:hover{border-color:#8b5cf6}
+.w-ok{color:#1f7a45}.w-med{color:#9a6400;background:#fff4d6;border-radius:3px}.w-bad{color:#b33;background:#fde4e4;border-radius:3px;font-weight:700}.w-om{color:#b33}
 /* results */
 .bands{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:14px 0}
 .band{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center}
@@ -815,7 +824,52 @@ async function pedirMic() {
   try { micStream = await navigator.mediaDevices.getUserMedia({ audio: true }); return true; }
   catch { return false; }
 }
+// Gravação em WAV 16 kHz mono (formato exigido pela avaliação de pronúncia do Azure).
+// Se o navegador não permitir, cai para o MediaRecorder comum.
+function codificarWav(amostras, taxa) {
+  const buf = new ArrayBuffer(44 + amostras.length * 2); const v = new DataView(buf);
+  const str = (o, t) => { for (let i = 0; i < t.length; i++) v.setUint8(o + i, t.charCodeAt(i)); };
+  str(0, 'RIFF'); v.setUint32(4, 36 + amostras.length * 2, true); str(8, 'WAVE'); str(12, 'fmt ');
+  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, taxa, true);
+  v.setUint32(28, taxa * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); str(36, 'data'); v.setUint32(40, amostras.length * 2, true);
+  for (let i = 0; i < amostras.length; i++) { const x = Math.max(-1, Math.min(1, amostras[i])); v.setInt16(44 + i * 2, x < 0 ? x * 0x8000 : x * 0x7fff, true); }
+  return new Blob([buf], { type: 'audio/wav' });
+}
+function reamostrar(dados, de, para) {
+  if (de === para) return dados;
+  const r = de / para, n = Math.floor(dados.length / r), out = new Float32Array(n);
+  for (let i = 0; i < n; i++) { const ini = Math.floor(i * r), fim = Math.min(dados.length, Math.floor((i + 1) * r)); let s = 0; for (let j = ini; j < fim; j++) s += dados[j]; out[i] = s / Math.max(1, fim - ini); }
+  return out;
+}
+function gravarWav(segundos, onTick) {
+  return new Promise((resolve, rejeitar) => {
+    let ctx;
+    try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return rejeitar(e); }
+    const fonte = ctx.createMediaStreamSource(micStream);
+    const proc = ctx.createScriptProcessor(4096, 1, 1);
+    const pedacos = []; let fim = false;
+    proc.onaudioprocess = e => { if (!fim) pedacos.push(new Float32Array(e.inputBuffer.getChannelData(0))); };
+    const mudo = ctx.createGain(); mudo.gain.value = 0;
+    fonte.connect(proc); proc.connect(mudo); mudo.connect(ctx.destination);
+    const parar = () => {
+      if (fim) return; fim = true; clearInterval(iv);
+      try { fonte.disconnect(); proc.disconnect(); mudo.disconnect(); } catch {}
+      const total = pedacos.reduce((n, p) => n + p.length, 0); const tudo = new Float32Array(total); let o = 0;
+      pedacos.forEach(p => { tudo.set(p, o); o += p.length; });
+      const taxa = ctx.sampleRate; ctx.close().catch(() => {});
+      resolve(codificarWav(reamostrar(tudo, taxa, 16000), 16000));
+    };
+    let r = segundos; onTick && onTick(r);
+    const iv = setInterval(() => { r--; onTick && onTick(r); if (r <= 0) parar(); }, 1000);
+    state.pararGravacao = parar;
+    if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+  });
+}
 function gravar(segundos, onTick) {
+  if (micStream) return gravarWav(segundos, onTick).catch(() => gravarMediaRecorder(segundos, onTick));
+  return gravarMediaRecorder(segundos, onTick);
+}
+function gravarMediaRecorder(segundos, onTick) {
   return new Promise(resolve => {
     if (!micStream || typeof MediaRecorder === 'undefined') {
       let r = segundos; const iv = setInterval(() => { r--; onTick && onTick(r); if (r <= 0) { clearInterval(iv); resolve(null); } }, 1000);
@@ -1198,7 +1252,7 @@ async function finalizar() {
     if (r.gravacoes.length) {
       h += '<p class="mt"><b>Suas gravações</b></p>';
       r.gravacoes.forEach((g, gi) => {
-        if (g.blob) { const url = URL.createObjectURL(g.blob); h += `<div class="rev"><div class="note">${esc(g.nome)} · "${esc(g.prompt)}"</div><audio controls src="${url}" style="width:100%;margin-top:6px"></audio><a href="${url}" download="${esc(chaveAluno().replace(/ /g, '_'))}_speaking_${gi + 1}.webm" class="note">⬇ baixar</a></div>`; }
+        if (g.blob) { const url = URL.createObjectURL(g.blob); h += `<div class="rev"><div class="note">${esc(g.nome)} · "${esc(g.prompt)}"</div><audio controls src="${url}" style="width:100%;margin-top:6px"></audio><a href="${url}" download="${esc(chaveAluno().replace(/[@ .]/g, '_'))}_speaking_${gi + 1}.${(g.blob.type || '').includes('wav') ? 'wav' : 'webm'}" class="note">⬇ baixar</a></div>`; }
         else h += `<div class="rev note">${esc(g.nome)} · sem gravação (microfone indisponível)</div>`;
       });
     }
@@ -1212,7 +1266,7 @@ async function finalizar() {
 async function subirAudio(blob, nome) {
   if (!CLOUDINARY_CLOUD || !CLOUDINARY_PRESET || !blob) return null;
   try {
-    const fd = new FormData(); fd.append('file', blob, nome + '.webm'); fd.append('upload_preset', CLOUDINARY_PRESET); fd.append('folder', 'toefl-speaking');
+    const fd = new FormData(); fd.append('file', blob, nome + ((blob.type || '').includes('wav') ? '.wav' : '.webm')); fd.append('upload_preset', CLOUDINARY_PRESET); fd.append('folder', 'toefl-speaking');
     const r = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/video/upload`, { method: 'POST', body: fd });
     const j = await r.json(); return j.secure_url || null;
   } catch { return null; }
@@ -1464,10 +1518,10 @@ function renderDados() {
 /* =====================================================================
    CORREÇÃO AUTOMÁTICA COM IA (Writing e Speaking)
    ===================================================================== */
-let IA_ATIVA = false, configCache = null;
+let IA_ATIVA = false, PRONUNCIA_ATIVA = false, configCache = null;
 async function carregarConfig() {
   if (configCache) return configCache;
-  try { configCache = await (await fetch(`${API}?acao=config`)).json(); IA_ATIVA = !!configCache.ia; } catch { configCache = {}; }
+  try { configCache = await (await fetch(`${API}?acao=config`)).json(); IA_ATIVA = !!configCache.ia; PRONUNCIA_ATIVA = !!configCache.pronuncia; } catch { configCache = {}; }
   return configCache;
 }
 const blobBase64 = blob => new Promise((ok, erro) => { const fr = new FileReader(); fr.onload = () => ok(String(fr.result).split(',')[1] || ''); fr.onerror = erro; fr.readAsDataURL(blob); });
@@ -1485,10 +1539,18 @@ async function corrigirComIA(pageId, res) {
       const g = grav[i];
       st(`Ouvindo suas gravações (${i + 1} de ${grav.length})...`);
       $('ia-prog').style.width = Math.round((i / (grav.length + 1)) * 100) + '%';
-      let ouvido = '';
-      if (g.blob) { try { ouvido = (await api('transcrever', { audio: await blobBase64(g.blob), mime: g.blob.type })).texto; } catch (e) { if (/OPENAI|desligada/.test(e.message)) throw e; } }
-      if (g.tipo === 'repetir') repetir.push({ frase: g.prompt, ouvido });
-      else entrevista.push({ pergunta: g.prompt, resposta: ouvido });
+      let ouvido = '', pron = null, b64 = null;
+      if (g.blob) {
+        b64 = await blobBase64(g.blob);
+        try { ouvido = (await api('transcrever', { audio: b64, mime: g.blob.type })).texto; } catch (e) { if (/OPENAI|desligada/.test(e.message)) throw e; }
+        const ref = g.tipo === 'repetir' ? g.prompt : ouvido;
+        if (PRONUNCIA_ATIVA && (g.blob.type || '').includes('wav') && ref) {
+          st(`Avaliando sua pronúncia (${i + 1} de ${grav.length})...`);
+          try { const p = await api('pronuncia', { audio: b64, referencia: ref, modo: g.tipo }); if (!p.vazio) pron = p; } catch (e) { console.warn('pronúncia', e); }
+        }
+      }
+      if (g.tipo === 'repetir') repetir.push({ frase: g.prompt, ouvido, pron });
+      else entrevista.push({ pergunta: g.prompt, resposta: ouvido, pron });
     }
     st(textos.length ? 'Corrigindo seus textos e respostas...' : 'Avaliando suas respostas...');
     $('ia-prog').style.width = '90%';
@@ -1516,16 +1578,31 @@ function correcaoHTML(c) {
     h += '</div>';
   });
   if (c.dicaWriting) h += `<p class="dica">👉 ${esc(c.dicaWriting)}</p>`;
+  if (c.pronuncia) {
+    const m = (k, n) => c.pronuncia[k] != null ? `<div class="pm"><b>${c.pronuncia[k]}</b><small>${n}</small><i style="width:${c.pronuncia[k]}%"></i></div>` : '';
+    h += `<div class="fbb pron"><div class="fbb-h">🗣️ Sua pronúncia</div><div class="pmetrics">${m('pronuncia', 'Geral')}${m('precisao', 'Precisão')}${m('fluencia', 'Fluência')}${m('entonacao', 'Entonação')}</div>`;
+    if ((c.palavrasTreinar || []).length) h += `<div class="note" style="margin:10px 0 6px">Palavras para treinar (toque para ouvir a pronúncia certa):</div><div class="wchips">${c.palavrasTreinar.map(w => `<button class="wchip" data-w="${esc(w.palavra)}">🔊 ${esc(w.palavra)}</button>`).join('')}</div>`;
+    h += '</div>';
+  }
   if ((c.repetir || []).length) {
     h += `<div class="fbb"><div class="fbb-h">🔁 Listen and Repeat · ${Math.round((c.precisaoRepeticao || 0) * 100)}% de precisão</div>`;
-    c.repetir.forEach(x => h += `<div class="rep"><span class="pct ${x.precisao >= 0.8 ? 'bom' : x.precisao >= 0.5 ? 'medio' : 'ruim'}">${Math.round(x.precisao * 100)}%</span><div><div>${esc(x.frase)}</div><div class="note">Você disse: “${esc(x.ouvido || '—')}”</div></div></div>`);
+    c.repetir.forEach(x => h += `<div class="rep"><span class="pct ${x.precisao >= 0.8 ? 'bom' : x.precisao >= 0.5 ? 'medio' : 'ruim'}">${Math.round(x.precisao * 100)}%</span><div><div>${x.pron && x.pron.palavras.length ? palavrasPron(x.pron.palavras) : esc(x.frase)}</div><div class="note">Você disse: “${esc(x.ouvido || '—')}”${x.pron ? ` · pronúncia <b>${x.pron.pronuncia}</b>` : ''}</div></div></div>`);
     h += '</div>';
   }
   (c.entrevista || []).forEach((e, i) => h += `<div class="fbb"><div class="fbb-h">🎙️ Pergunta ${i + 1} · ${n1(e.banda)}</div><div class="note" style="margin-bottom:4px">${esc(e.pergunta)}</div><div class="fbb-t">${esc(e.comentario)}</div><details><summary class="note">Ver o que você disse</summary><p class="note">“${esc(e.resposta || '—')}”</p></details></div>`);
   if (c.dicaSpeaking) h += `<p class="dica">👉 ${esc(c.dicaSpeaking)}</p>`;
-  if ((c.repetir || []).length || (c.entrevista || []).length) h += '<p class="note mt">A IA avalia o Speaking pela transcrição da sua fala. Pronúncia e entonação são avaliadas pela Denise.</p>';
+  if (((c.repetir || []).length || (c.entrevista || []).length) && !c.pronuncia) h += '<p class="note mt">A IA avalia o Speaking pela transcrição da sua fala. Pronúncia e entonação são avaliadas pela Denise.</p>';
+  if (c.pronuncia) h += '<p class="note mt">Legenda: <span class="w-ok">verde</span> boa pronúncia · <span class="w-med">amarelo</span> pode melhorar · <span class="w-bad">vermelho</span> pronúncia errada · <s>riscado</s> você pulou a palavra.</p>';
   return h;
 }
+function palavrasPron(palavras) {
+  return palavras.filter(w => w.erro !== 'Insertion').map(w => {
+    if (w.erro === 'Omission') return `<s class="w-om" title="você pulou esta palavra">${esc(w.palavra)}</s>`;
+    const cls = w.erro === 'Mispronunciation' || (w.nota != null && w.nota < 60) ? 'w-bad' : (w.nota != null && w.nota < 80) ? 'w-med' : 'w-ok';
+    return `<span class="${cls}" title="${w.nota != null ? 'nota ' + w.nota : ''}">${esc(w.palavra)}</span>`;
+  }).join(' ');
+}
+document.addEventListener('click', e => { const b = e.target.closest('.wchip'); if (b) tocar(null, b.dataset.w); });
 
 /* =====================================================================
    FEEDBACKS DA DENISE
