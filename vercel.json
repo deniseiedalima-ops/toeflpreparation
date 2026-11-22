@@ -1,5 +1,14 @@
 {
   "redirects": [
-    { "source": "/", "destination": "/toefl/", "permanent": false }
-  ]
+    {
+      "source": "/",
+      "destination": "/toefl/",
+      "permanent": false
+    }
+  ],
+  "functions": {
+    "api/toefl.js": {
+      "maxDuration": 60
+    }
+  }
 }

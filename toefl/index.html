@@ -105,6 +105,55 @@ mark{background:#ffe1cc;padding:0 3px;border-radius:3px}
 .opt .l{display:block;width:22px;height:22px;border-radius:50%;border:2px solid #999;background:#fff}
 .opt.sel .l{border-color:var(--ink);background:var(--ink);box-shadow:inset 0 0 0 4px #fff}
 @media(max-width:600px){.slot-b{min-width:80px}.av{width:46px;height:46px;font-size:24px}}
+.btn-sair{margin-left:10px;background:transparent;color:#fff;border:1.5px solid #444;border-radius:10px;padding:7px 12px;font-size:13px;font-weight:700}
+.btn-sair:hover{border-color:var(--orange);color:var(--orange)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip.big{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:14px}
+.chip.big b{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;margin-right:2px}
+.chip.big span{color:var(--muted);font-size:12px;margin-left:4px}
+.skillcards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+@media(max-width:760px){.skillcards{grid-template-columns:repeat(2,1fr)}}
+.sk{background:#fff;border:1px solid var(--line);border-top:4px solid var(--c);border-radius:16px;padding:14px}
+.sk-h{font-size:13px;font-weight:700;color:var(--muted)}
+.sk-n{font-family:'DM Serif Display',serif;font-size:40px;line-height:1.1;margin:4px 0}
+.sk-n span{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;vertical-align:middle}
+.up{color:#1f9d55}.down{color:#d64545}
+.sk-bar{position:relative;height:8px;background:#efebe4;border-radius:6px;margin:6px 0 8px}
+.sk-bar i{display:block;height:100%;background:var(--c);border-radius:6px}
+.sk-bar b{position:absolute;top:-4px;width:2px;height:16px;background:var(--orange)}
+.sk-s{font-size:12px;color:var(--muted)}
+.reco{background:var(--card);color:#fff;border-radius:20px;padding:22px;margin-bottom:14px;border-left:6px solid var(--c)}
+.reco-k{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);font-weight:700}
+.reco h2{font-size:26px;margin:6px 0 8px}
+.reco p{color:#ddd;font-size:15px}
+.reco b{color:#fff}
+.reco-tips{background:#1d1d1d;border-radius:12px;padding:12px 14px;margin:14px 0;font-size:14px;color:#ddd}
+.reco-tips ul{padding-left:18px;margin-top:6px}.reco-tips li{margin:4px 0}
+.reco-rank{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.reco-rank .note{color:#999}
+.rk{font-size:12px;padding:4px 10px;border-radius:99px;background:#2a2a2a;color:#bbb}.rk.on{background:var(--orange);color:#fff;font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;margin-top:4px}
+.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.grp{font-weight:700;font-size:14px;margin:14px 0 4px;padding-left:8px;border-left:3px solid var(--c)}
+tr.fb td{background:#fff7f0;font-size:13px;color:#5a4636;border-bottom:1px solid #f3e4d6}
+.badge{display:inline-block;min-width:18px;padding:1px 6px;border-radius:99px;background:var(--orange);color:#fff;font-size:11px;font-weight:700;margin-left:4px}
+.fb-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}
+.notas{display:flex;gap:8px}
+.nota{background:#f5f2ec;border-radius:12px;padding:6px 10px;text-align:center;font-family:'DM Serif Display',serif;font-size:22px;line-height:1.1}
+.nota small{display:block;font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.fbb{border-left:3px solid var(--orange);background:#fff7f0;border-radius:0 12px 12px 0;padding:10px 14px;margin:8px 0}
+.fbb.mine{border-left-color:#bbb;background:#f7f5f1}
+.fbb-h{font-weight:700;font-size:13px;margin-bottom:4px}
+.fbb-t{white-space:pre-wrap;font-size:15px}
+.pendente ul{padding-left:20px;margin:8px 0}
+.iacard{border:2px solid #2f6fde22;background:linear-gradient(180deg,#f4f7ff,#fff)}
+.ia-h{font-weight:700;font-size:17px;margin-bottom:6px}
+.progress.light{background:#e6ebf7;margin-top:10px}.progress.light i{transition:width .4s}
+.corr{margin-top:8px;font-size:14px;display:grid;gap:4px}.corr s{color:#b44}
+.dica{background:#fff3e8;border-radius:10px;padding:8px 12px;font-size:14px;margin:8px 0}
+.rep{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-top:1px solid #f0e6dc;font-size:14px}
+.pct{flex:none;width:46px;text-align:center;border-radius:8px;font-weight:700;font-size:13px;padding:2px 0}
+.pct.bom{background:#e3f6ea;color:#1f7a45}.pct.medio{background:#fff1d6;color:#9a6400}.pct.ruim{background:#fde4e4;color:#b33}
 /* results */
 .bands{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:14px 0}
 .band{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center}
@@ -154,10 +203,12 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;p
     <button class="tab on" data-pane="pane-skill">🎯 Por habilidade</button>
     <button class="tab" data-pane="pane-full">📝 Simulados completos</button>
     <button class="tab" data-pane="pane-data">📊 Meu desempenho</button>
+    <button class="tab" data-pane="pane-fb">💬 Feedbacks <span class="badge" id="fb-badge" style="display:none"></span></button>
   </div>
   <div id="pane-skill" class="pane on"></div>
   <div id="pane-full" class="pane"></div>
   <div id="pane-data" class="pane"></div>
+  <div id="pane-fb" class="pane"></div>
 </section>
 
 <!-- INTRO DA SEÇÃO -->
@@ -165,7 +216,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;p
   <div class="brand" id="intro-brand"></div>
   <div class="hero"><h1 id="intro-title"></h1><p id="intro-text"></p></div>
   <div class="card" id="intro-body"></div>
-  <div class="nav"><button class="btn ghost" id="intro-voltar">Voltar</button><button class="btn" id="intro-go">Começar</button></div>
+  <div class="nav"><button class="btn ghost" id="intro-voltar">✕ Sair do simulado</button><button class="btn" id="intro-go">Começar</button></div>
 </section>
 
 <!-- PROVA -->
@@ -176,6 +227,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;p
       <div class="progress"><i id="tb-prog"></i></div>
     </div>
     <div class="timer" id="tb-timer" style="margin-left:12px">--:--</div>
+    <button class="btn-sair" id="btn-cancelar" title="Cancelar e voltar ao início">✕ Sair</button>
   </div>
   <div id="stage"></div>
   <div class="nav"><button class="btn" id="btn-next">Próxima →</button></div>
@@ -316,7 +368,76 @@ const BANCO = {
           ] },
       ],
     } },
-    R2: { titulo: 'Reading 2', modulos: { base: [], dificil: [], facil: [] } },
+    R2: { titulo: 'Reading 2', modulos: {
+      base: [
+        { tipo: 'completar', texto: 'Volcanoes form where magma from deep inside the Earth reaches the surface. Mo{{st}} volcanoes are fou{{nd}} along the edg{{es}} of tectonic pla{{tes}}, where the cr{{ust}} is thin or bro{{ken}}. When pres{{sure}} builds up und{{er}} the ground, an eru{{ption}} can occ{{ur}} suddenly. Scientists monitor gas levels and small earthquakes to predict these events.' },
+        { tipo: 'diaria', cabecalho: 'Read a notice', titulo: 'Laptop Loan Program',
+          texto: 'Students can now borrow laptops from the Main Library service desk for up to three days at a time. Laptops must be returned to the same desk by closing time on the due date; returns made after closing will be counted as one day late. Late returns cost $5 per day, and borrowers with more than $15 in fines cannot borrow again until the fines are paid. Chargers are included, but headphones are not. To reserve a laptop in advance, use the library app; walk-in loans depend on availability.',
+          assinatura: 'Main Library · Student Services',
+          questoes: [
+            { enunciado: 'Which of the following is NOT mentioned in the notice?', opcoes: ['How long a laptop can be borrowed', 'How much a late return costs', 'Where laptops must be returned', 'How many laptops the library owns'], correta: 3 },
+            { enunciado: 'What happens if a student returns a laptop after closing time on the due date?', opcoes: ['The laptop is not accepted', 'The return is counted as one day late', 'The student must pay $15', 'The loan is extended automatically'], correta: 1 },
+            { enunciado: 'What can be inferred about a student with $20 in unpaid fines?', opcoes: ['The student must return the charger first', 'The student can borrow only with a reservation', 'The student cannot borrow a laptop until the fines are paid', 'The student will receive free headphones'], correta: 2 },
+          ] },
+        { tipo: 'diaria', cabecalho: 'Read an email', titulo: 'Subject: Saturday shift change',
+          texto: 'To: Volunteers\nFrom: Carla Mendes, Riverside Food Bank\n\nHi all,\n\nBecause of the city marathon this Saturday, Riverside Avenue will be closed until 1:00 P.M. Our morning shift will therefore start at 1:30 P.M. instead of 9:00 A.M. If you can\'t make the new time, please reply by Thursday so I can find someone to replace you. Parking will be available behind the community church on Elm Street.\n\nThank you for your flexibility!\nCarla',
+          questoes: [
+            { enunciado: 'Why is the shift time changing?', opcoes: ['The food bank is being cleaned', 'A road will be closed for a sporting event', 'Fewer volunteers are available', 'The church needs the parking lot'], correta: 1 },
+            { enunciado: 'What should volunteers do if they cannot work at the new time?', opcoes: ['Come at 9:00 A.M. anyway', 'Park on Riverside Avenue', 'Let Carla know by Thursday', 'Find a replacement themselves'], correta: 2 },
+          ] },
+        { tipo: 'academica', titulo: 'Sleep and Memory',
+          texto: 'For a long time, sleep was viewed as a passive state in which the brain simply rested. Research over the past few decades has overturned this view. Sleep is now understood to be an active process during which the brain performs essential maintenance, including the consolidation of memories formed during the day.\n\nConsolidation refers to the process by which new, fragile memories become more stable. Experiments show that people who sleep after learning a list of words or a new motor skill, such as a finger-tapping sequence, perform better when tested later than people who stay awake for the same amount of time. Brain recordings suggest that during deep sleep, the hippocampus [[replays]] patterns of activity from earlier experiences, helping to transfer information to the cortex for long-term storage.\n\nThese findings have practical implications for students. Staying up all night before an exam may provide extra study time, but it reduces the brain\'s ability to retain what was studied. Spreading study sessions over several days, with sleep in between, appears to be one of the most effective ways to remember information over the long term.',
+          questoes: [
+            { enunciado: 'According to paragraph 1, how has the scientific view of sleep changed?', opcoes: ['Sleep was once thought to be active but is now seen as passive', 'Sleep was once seen as simple rest but is now known to be an active process', 'Scientists now believe sleep is unnecessary for adults', 'Sleep is now thought to affect only physical health'], correta: 1 },
+            { enunciado: 'The word "replays" in paragraph 2 is closest in meaning to', opcoes: ['repeats', 'erases', 'ignores', 'creates'], correta: 0 },
+            { enunciado: 'Why does the author mention a finger-tapping sequence in paragraph 2?', opcoes: ['To show that motor skills are harder to learn than words', 'To give an example of a skill tested in sleep experiments', 'To explain how the hippocampus works', 'To suggest that students should practice music'], correta: 1 },
+            { enunciado: 'What can be inferred about a student who studies all night before an exam?', opcoes: ['The student will remember more than students who slept', 'The student may retain less of what was studied', 'The student will perform better on motor tasks', 'The student will not need to review again'], correta: 1 },
+            { enunciado: 'What is the main idea of the passage?', opcoes: ['Sleep plays an active role in strengthening memories', 'Deep sleep is more important than dreaming', 'Students should study only in the morning', 'The hippocampus controls all types of memory'], correta: 0 },
+          ] },
+      ],
+      dificil: [
+        { tipo: 'completar', texto: 'Antibiotics have saved millions of lives since their discovery in the twentieth century. How{{ever}}, their wides{{pread}} use has acce{{lerated}} the evol{{ution}} of resistant bact{{eria}}. When a pati{{ent}} stops treat{{ment}} too early, the stron{{gest}} microbes may surv{{ive}} and multi{{ply}}.' },
+        { tipo: 'diaria', cabecalho: 'Read a notice', titulo: 'Shared Kitchen Policy Update',
+          texto: 'Effective March 1, residents of Linden Graduate Housing must label all food stored in shared refrigerators with their name and the date. Unlabeled items will be removed every Sunday at 10:00 P.M. and donated if unopened, or discarded otherwise. Cooking appliances such as rice cookers and air fryers may be used only in the kitchen, not in bedrooms, because they have triggered several false fire alarms this year. Residents who wish to store large quantities of food may rent a locker in the basement pantry for $10 per semester; lockers are assigned first-come, first-served at the housing office.',
+          assinatura: 'Linden Graduate Housing Office',
+          questoes: [
+            { enunciado: 'What will happen to an unopened, unlabeled jar of sauce on Sunday night?', opcoes: ['It will be discarded', 'It will be moved to a pantry locker', 'It will be donated', 'It will be returned to its owner'], correta: 2 },
+            { enunciado: 'Why are residents asked not to use air fryers in their bedrooms?', opcoes: ['They use too much electricity', 'They have caused false fire alarms', 'They damage the furniture', 'The bedrooms are too small'], correta: 1 },
+            { enunciado: 'Which of the following is NOT mentioned in the notice?', opcoes: ['How much a pantry locker costs', 'Where residents can request a locker', 'When unlabeled food will be removed', 'How many lockers are available'], correta: 3 },
+          ] },
+        { tipo: 'academica', titulo: 'Biomimicry',
+          texto: 'Biomimicry is the practice of solving human design problems by imitating strategies found in nature. Its basic premise is that living organisms, shaped by millions of years of natural selection, have already developed efficient solutions to many engineering challenges. One of the earliest and best-known examples is Velcro, which the Swiss engineer George de Mestral invented in the 1940s after noticing how burrs clung to his dog\'s fur.\n\nA more sophisticated case involves Japan\'s high-speed Shinkansen trains. Early models produced a loud boom when they exited tunnels at high speed, because they pushed a wall of compressed air ahead of them. An engineer who was also a birdwatcher observed that kingfishers dive into water with very little splash. Redesigning the train\'s nose to resemble the bird\'s long, narrow beak reduced the noise and also lowered energy consumption.\n\nCritics, however, caution that the term is sometimes used loosely. Simply copying a natural shape does not guarantee a better product, and some designs marketed as nature-inspired have performed no better than conventional ones. Moreover, organisms evolve to survive in particular environments, not to meet human goals, so their solutions must be carefully [[adapted]] rather than imitated directly. Despite these limitations, biomimicry continues to encourage engineers to examine nature more closely before reaching for conventional answers.',
+          questoes: [
+            { enunciado: 'According to paragraph 1, what is the basic idea behind biomimicry?', opcoes: ['Engineers should avoid using natural materials', 'Organisms have already developed effective solutions to many problems', 'New products should be tested on animals first', 'Natural selection can be controlled by engineers'], correta: 1 },
+            { enunciado: 'Why does the author mention the kingfisher in paragraph 2?', opcoes: ['To compare the speed of birds and trains', 'To show that birdwatching is popular in Japan', 'To explain the source of a design that made trains quieter', 'To argue that animals adapt easily to noise'], correta: 2 },
+            { enunciado: 'The word "adapted" in paragraph 3 is closest in meaning to', opcoes: ['modified', 'rejected', 'admired', 'measured'], correta: 0 },
+            { enunciado: 'Which of the following is NOT mentioned as a criticism of biomimicry in paragraph 3?', opcoes: ['The term is sometimes used carelessly', 'Some nature-inspired products are no better than others', 'Natural solutions may not fit human goals directly', 'Biomimicry is too expensive for most companies'], correta: 3 },
+            { enunciado: 'Which best describes the author\'s attitude toward biomimicry?', opcoes: ['Strongly opposed to it', 'Completely uncritical of it', 'Generally supportive while recognizing its limits', 'Uninterested in its results'], correta: 2 },
+          ] },
+      ],
+      facil: [
+        { tipo: 'completar', texto: 'Bicycles are a cheap and healthy way to travel. Ma{{ny}} cities now ha{{ve}} special la{{nes}} for cyclists. Rid{{ing}} a bike every d{{ay}} can make yo{{ur}} heart stro{{nger}} and help y{{ou}} save mon{{ey}} on gas. It is al{{so}} good for the environment.' },
+        { tipo: 'diaria', cabecalho: 'Read a sign', titulo: 'Welcome to City Gym!',
+          texto: '• Open every day from 6 A.M. to 10 P.M.\n• Please clean the machines after you use them.\n• Towels are free at the front desk.\n• Children under 14 must be with an adult.\n• The pool is closed on Mondays.',
+          questoes: [
+            { enunciado: 'When is the pool closed?', opcoes: ['Every day after 10 P.M.', 'On Mondays', 'On weekends', 'In the morning'], correta: 1 },
+            { enunciado: 'What should people do after using a machine?', opcoes: ['Pay at the front desk', 'Clean it', 'Turn it off', 'Write their name on a list'], correta: 1 },
+          ] },
+        { tipo: 'diaria', cabecalho: 'Read a text message', titulo: '',
+          texto: 'Hi Marco! The movie starts at 7:30, so let\'s meet at the café next to the cinema at 7:00. I already bought the tickets online, so you can pay me back later. Don\'t forget your jacket, it\'s cold in there! — Lucy',
+          questoes: [
+            { enunciado: 'Where will Marco and Lucy meet?', opcoes: ['Inside the cinema', 'At the café next to the cinema', 'At Lucy\'s house', 'At the ticket office'], correta: 1 },
+            { enunciado: 'What does Lucy say about the tickets?', opcoes: ['Marco needs to buy them', 'They are sold out', 'She has already bought them', 'They are free'], correta: 2 },
+          ] },
+        { tipo: 'academica', titulo: 'Why Do Leaves Change Color?',
+          texto: 'In many parts of the world, tree leaves turn yellow, orange, and red in autumn. During spring and summer, leaves are green because they contain chlorophyll, a substance that helps plants make food from sunlight. As the days get shorter and colder, trees stop making chlorophyll, and the green color slowly [[fades]].\n\nWhen the green disappears, other colors that were in the leaf all along, such as yellow and orange, become visible. Some trees also produce new red substances in autumn. Scientists believe these red colors may protect the leaves from strong sunlight while the tree takes back useful nutrients before the leaves fall.',
+          questoes: [
+            { enunciado: 'Why are leaves green in spring and summer?', opcoes: ['They are full of water', 'They contain chlorophyll', 'They receive less sunlight', 'They are protected from the cold'], correta: 1 },
+            { enunciado: 'The word "fades" in paragraph 1 is closest in meaning to', opcoes: ['becomes weaker', 'becomes brighter', 'moves away', 'grows'], correta: 0 },
+            { enunciado: 'According to paragraph 2, where do the yellow and orange colors come from?', opcoes: ['They are made by insects', 'They were in the leaf the whole time', 'They come from the soil', 'They appear because of rain'], correta: 1 },
+          ] },
+      ],
+    } },
     R3: { titulo: 'Reading 3', modulos: { base: [], dificil: [], facil: [] } },
     R4: { titulo: 'Reading 4', modulos: { base: [], dificil: [], facil: [] } },
   },
@@ -385,7 +506,68 @@ const BANCO = {
           ] },
       ],
     } },
-    L2: { titulo: 'Listening 2', modulos: { base: [], dificil: [], facil: [] } },
+    L2: { titulo: 'Listening 2', modulos: {
+      base: [
+        { tipo: 'resposta', audio: '', transcricao: 'Do you know where I can print my essay?', opcoes: ['It\'s a really long essay.', 'There\'s a printer on the second floor of the library.', 'I printed it yesterday.', 'Yes, I know the professor.'], correta: 1 },
+        { tipo: 'resposta', audio: '', transcricao: 'I\'m sorry, but this seat is taken.', opcoes: ['Oh, no problem. I\'ll find another one.', 'Yes, please take a seat.', 'I took it last week.', 'It\'s a comfortable chair.'], correta: 0 },
+        { tipo: 'resposta', audio: '', transcricao: 'Should I bring anything to the party on Friday?', opcoes: ['The party was a lot of fun.', 'Friday is my favorite day.', 'Maybe some drinks, if you don\'t mind.', 'I didn\'t bring it.'], correta: 2 },
+        { tipo: 'resposta', audio: '', transcricao: 'Haven\'t you finished that report yet?', opcoes: ['I\'ll report it to the manager.', 'Not yet. I\'m still waiting for the sales numbers.', 'Yes, it isn\'t finished.', 'The report is on the desk.'], correta: 1 },
+        { tipo: 'conversa', cabecalho: 'Listen to a conversation between a student and a librarian.', audio: '',
+          transcricao: 'Man: Hi, I\'m trying to read an article from the Journal of Marine Biology, but the website keeps asking me to pay.\nWoman: Are you on the campus Wi-Fi?\nMan: No, I\'m at home.\nWoman: That\'s the problem. Off campus, you need to log in through the library website first. Then the journal recognizes you as a student, and the article is free.\nMan: Oh, I didn\'t know that. Is there a guide somewhere?\nWoman: Yes, there\'s a short video on the library\'s homepage, under Remote Access. And if it still doesn\'t work, you can request the article through interlibrary loan. It usually arrives by email within two days.\nMan: Great, I\'ll try the video first. Thanks!',
+          questoes: [
+            { enunciado: 'What is the man\'s problem?', opcoes: ['He lost his student ID card', 'He cannot open an article without paying', 'The library is closed', 'The journal stopped publishing'], correta: 1 },
+            { enunciado: 'What will the man probably do first?', opcoes: ['Pay for the article', 'Request the article through interlibrary loan', 'Watch a video on the library\'s website', 'Go back to campus'], correta: 2 },
+          ] },
+        { tipo: 'aviso', cabecalho: 'Listen to an announcement at a train station.', audio: '',
+          transcricao: 'Attention, passengers. The 4:15 train to Boston has been delayed by approximately thirty minutes due to a signal problem near Providence. Passengers with connecting trains in Boston should speak to a staff member at the information desk, who can help rebook your trip at no extra cost. The café car will remain open, and free water is available at the front of the waiting area. We apologize for the inconvenience.',
+          questoes: [
+            { enunciado: 'Why is the train delayed?', opcoes: ['Because of bad weather', 'Because of a problem with a signal', 'Because the crew is late', 'Because of track repairs in Boston'], correta: 1 },
+            { enunciado: 'What should passengers with connecting trains do?', opcoes: ['Buy a new ticket', 'Go to the café car', 'Talk to someone at the information desk', 'Call the Boston station'], correta: 2 },
+          ] },
+        { tipo: 'palestra', cabecalho: 'Listen to part of a talk in an economics class.', audio: '',
+          transcricao: 'Professor: Today we\'re going to look at an invention that doesn\'t sound very exciting but completely changed world trade: the shipping container. Before the 1950s, cargo was loaded onto ships piece by piece, boxes, bags, barrels, by teams of dock workers. Loading a single ship could take a week, and goods were often damaged or stolen. In 1956, an American trucking businessman named Malcom McLean had a simple idea: put goods in standard-sized metal boxes that could be moved directly from trucks to ships to trains without being unpacked. The result was dramatic. Loading costs fell by more than ninety percent, and ships spent hours in port instead of days. Now, there was a downside. Because far fewer workers were needed, many port cities lost thousands of jobs, and some old harbors declined as trade moved to new, larger container ports.',
+          questoes: [
+            { enunciado: 'What is the talk mainly about?', opcoes: ['The history of trucking in the United States', 'How a simple invention changed international trade', 'Why dock workers went on strike', 'How cargo ships are built'], correta: 1 },
+            { enunciado: 'According to the professor, what was a problem with loading cargo before containers?', opcoes: ['It was slow, and goods were often damaged', 'Ships were too small for most goods', 'Trucks could not reach the ports', 'Containers were too expensive'], correta: 0 },
+            { enunciado: 'Why does the professor mention port cities losing jobs?', opcoes: ['To explain why McLean started his business', 'To describe a negative consequence of containers', 'To show that trade decreased after 1956', 'To compare trains and ships'], correta: 1 },
+          ] },
+      ],
+      dificil: [
+        { tipo: 'resposta', audio: '', transcricao: 'I\'m thinking of dropping my chemistry class.', opcoes: ['Check the deadline first. After this week, you can\'t get a refund.', 'I dropped my phone yesterday.', 'Chemistry is on Tuesdays.', 'Yes, the class is really popular.'], correta: 0 },
+        { tipo: 'resposta', audio: '', transcricao: 'Wasn\'t the meeting supposed to start at ten?', opcoes: ['I\'ll meet you at ten, then.', 'It was, but the manager is running late.', 'Yes, it was a long meeting.', 'Ten people are coming.'], correta: 1 },
+        { tipo: 'resposta', audio: '', transcricao: 'You\'ve lived here for years. Any restaurant you\'d recommend?', opcoes: ['I\'ve lived here since 2015.', 'Yes, I\'d recommend it.', 'There\'s a great Thai place around the corner, if you like spicy food.', 'I usually cook at home on weekends.'], correta: 2 },
+        { tipo: 'conversa', cabecalho: 'Listen to a conversation between a student and a professor.', audio: '',
+          transcricao: 'Woman: Professor Chen, could I ask your advice? I\'ve been offered a summer internship at an engineering firm, but it overlaps with the summer statistics course I need for my degree.\nMan: Congratulations! Is the statistics course offered only in the summer?\nWoman: No, it\'s also offered in the fall, but then I\'d have five courses that semester instead of four.\nMan: Hmm. Five is heavy, but statistics is mostly problem sets. It\'s manageable if your other classes aren\'t too demanding. And an internship at a firm like that can open a lot of doors.\nWoman: That\'s what I was hoping you\'d say. My other fall courses are mostly reading-based.\nMan: Then I\'d take the internship. Just talk to your advisor to make sure the fall section isn\'t already full. It sometimes fills up early.\nWoman: I\'ll email her today.',
+          questoes: [
+            { enunciado: 'Why does the woman go to see the professor?', opcoes: ['To ask for an extension on an assignment', 'To get advice about a conflict between an internship and a course', 'To complain about the statistics course', 'To ask for a letter of recommendation'], correta: 1 },
+            { enunciado: 'What does the professor imply about the fall statistics section?', opcoes: ['It is easier than the summer course', 'It might not have space if she waits too long', 'It will probably be canceled', 'It is only for engineering students'], correta: 1 },
+          ] },
+        { tipo: 'palestra', cabecalho: 'Listen to part of a talk in an astronomy class.', audio: '',
+          transcricao: 'Professor: So how do astronomers find planets around other stars, when those planets are far too dim to see directly? The most productive technique so far has been the transit method. When a planet passes in front of its star, from our point of view, it blocks a tiny fraction of the star\'s light. For a planet the size of Jupiter crossing a star like the Sun, the star dims by about one percent. For an Earth-sized planet, it\'s closer to one hundredth of a percent, which is why you need extremely sensitive space telescopes. By measuring how much the light drops, astronomers can estimate the planet\'s size, and by timing how often the dimming repeats, they learn how long its orbit takes. Now, the method has a built-in limitation: it only works if the planet\'s orbit is lined up almost edge-on with our line of sight. Most planetary systems aren\'t oriented that way, so for every planet we detect by transit, there are many more we simply miss.',
+          questoes: [
+            { enunciado: 'What is the main purpose of the talk?', opcoes: ['To describe how space telescopes are built', 'To explain a technique for detecting planets around other stars', 'To compare Jupiter and Earth', 'To argue that most stars have no planets'], correta: 1 },
+            { enunciado: 'What can astronomers learn from how often the dimming repeats?', opcoes: ['The planet\'s size', 'How long the planet\'s orbit takes', 'The star\'s temperature', 'The planet\'s distance from Earth'], correta: 1 },
+            { enunciado: 'What does the professor imply about planets around other stars?', opcoes: ['Most of them have already been found', 'Only large planets can exist near stars', 'Many more exist than the transit method can detect', 'Most planetary systems have edge-on orbits'], correta: 2 },
+          ] },
+      ],
+      facil: [
+        { tipo: 'resposta', audio: '', transcricao: 'Where\'s the nearest bus stop?', opcoes: ['Just across the street.', 'The bus is red.', 'I stopped at the store.', 'It leaves at noon.'], correta: 0 },
+        { tipo: 'resposta', audio: '', transcricao: 'Would you like some coffee?', opcoes: ['I liked it a lot.', 'No, thanks. I just had some.', 'Coffee comes from Brazil.', 'At the café.'], correta: 1 },
+        { tipo: 'resposta', audio: '', transcricao: 'When is your birthday?', opcoes: ['I\'m twenty-five.', 'It was a great party.', 'It\'s on May third.', 'Every year.'], correta: 2 },
+        { tipo: 'aviso', cabecalho: 'Listen to an announcement in a classroom.', audio: '',
+          transcricao: 'Good morning, class. Just a reminder that there\'s no class next Monday because of the holiday. Your essays are now due on Wednesday instead of Monday. Please send them to me by email before noon. See you on Wednesday!',
+          questoes: [
+            { enunciado: 'Why is there no class next Monday?', opcoes: ['The teacher is sick', 'It is a holiday', 'The room is being painted', 'There is an exam'], correta: 1 },
+            { enunciado: 'When are the essays due?', opcoes: ['On Monday morning', 'On Wednesday before noon', 'On Wednesday afternoon', 'Next Friday'], correta: 1 },
+          ] },
+        { tipo: 'conversa', cabecalho: 'Listen to a conversation at a museum.', audio: '',
+          transcricao: 'Man: Excuse me, is this the line for museum tickets?\nWoman: Yes, but you can also buy them online. It\'s faster and five dollars cheaper.\nMan: Really? Can I do it on my phone?\nWoman: Sure. Just scan the code on that sign, and you\'ll get the ticket by email.\nMan: Great, thanks a lot!',
+          questoes: [
+            { enunciado: 'What does the woman suggest?', opcoes: ['Coming back tomorrow', 'Buying the ticket online', 'Asking at the front desk', 'Paying with cash'], correta: 1 },
+            { enunciado: 'What is one advantage she mentions?', opcoes: ['It includes a free guide', 'It is cheaper', 'It gives a better seat', 'It lasts all year'], correta: 1 },
+          ] },
+      ],
+    } },
     L3: { titulo: 'Listening 3', modulos: { base: [], dificil: [], facil: [] } },
     L4: { titulo: 'Listening 4', modulos: { base: [], dificil: [], facil: [] } },
   },
@@ -413,7 +595,27 @@ const BANCO = {
           { nome: 'Marcus', texto: 'I disagree. When lectures are online, many students stop coming to class, and they miss the chance to ask questions and participate in discussions. That interaction is an important part of learning.' },
         ] },
     ] },
-    W2: { titulo: 'Writing 2', itens: [] },
+    W2: { titulo: 'Writing 2', itens: [
+      { tipo: 'frase', contexto: 'Have you seen my umbrella anywhere?', modelo: 'I _ _ _ _ by the front door.', opcoes: ['think', 'I saw', 'it', 'leaning', 'lean'], resposta: ['think', 'I saw', 'it', 'leaning'] },
+      { tipo: 'frase', contexto: 'Why are you leaving so early?', modelo: '_ _ _ _ before the traffic gets bad.', opcoes: ['I want', 'to', 'get', 'home', 'getting'], resposta: ['I want', 'to', 'get', 'home'] },
+      { tipo: 'frase', contexto: 'Is the new café any good?', modelo: 'Yes, _ _ _ _ I have ever had.', opcoes: ['it', 'has', 'the best', 'coffee', 'better'], resposta: ['it', 'has', 'the best', 'coffee'] },
+      { tipo: 'frase', contexto: 'Can you help me move this weekend?', modelo: '_ _ _, but I can help on Sunday.', opcoes: ['I\'m', 'busy', 'on Saturday', 'in Saturday'], resposta: ['I\'m', 'busy', 'on Saturday'] },
+      { tipo: 'frase', contexto: 'Where did you learn to speak Spanish so well?', modelo: '_ _ _ _ in Mexico for two years.', opcoes: ['I', 'lived', 'with', 'a host family', 'living'], resposta: ['I', 'lived', 'with', 'a host family'] },
+      { tipo: 'frase', contexto: 'The professor moved the exam to next week.', modelo: '_ _ _ _ more time to study?', opcoes: ['Does', 'that', 'mean', 'we have', 'means'], resposta: ['Does', 'that', 'mean', 'we have'] },
+      { tipo: 'frase', contexto: 'What did the doctor say?', modelo: 'She told me _ _ _ _ for a few days.', opcoes: ['to', 'stay', 'in', 'bed', 'staying'], resposta: ['to', 'stay', 'in', 'bed'] },
+      { tipo: 'frase', contexto: 'How was the job interview?', modelo: '_ _ _, but I think it went well.', opcoes: ['It', 'was', 'a little stressful', 'were'], resposta: ['It', 'was', 'a little stressful'] },
+      { tipo: 'frase', contexto: 'Why didn\'t you take the bus?', modelo: '_ _ _ would be faster.', opcoes: ['I', 'thought', 'walking', 'walk'], resposta: ['I', 'thought', 'walking'] },
+      { tipo: 'frase', contexto: 'Did you finish the book I lent you?', modelo: 'Not yet, _ _ _ _ the last chapter.', opcoes: ['but', 'I\'m', 'almost', 'at', 'reading'], resposta: ['but', 'I\'m', 'almost', 'at'] },
+      { tipo: 'email', tempo: 7 * 60, para: 'Mr. Patel, your neighbor',
+        situacao: 'Your neighbor has been playing loud music late at night for the past week, and you have an important exam in a few days.',
+        tarefas: ['Explain the problem politely', 'Describe how it is affecting you', 'Suggest a solution that works for both of you'] },
+      { tipo: 'discussao', tempo: 10 * 60, disciplina: 'environmental science', nomeProfessor: 'Dr. Alvarez',
+        professor: 'Some cities are banning cars from their downtown areas to reduce pollution and traffic. Supporters say this makes cities healthier and more pleasant, while opponents say it hurts local businesses and makes life harder for people who need to drive. Do you think banning cars from city centers is a good idea? Why or why not?',
+        alunos: [
+          { nome: 'Hana', texto: 'I think it\'s a great idea. When my hometown closed its main street to cars, more people started walking there, and the cafés actually got busier.' },
+          { nome: 'Diego', texto: 'I\'m not convinced. Older people and people with disabilities often depend on cars, and public transportation in many cities is not good enough yet.' },
+        ] },
+    ] },
     W3: { titulo: 'Writing 3', itens: [] },
     W4: { titulo: 'Writing 4', itens: [] },
   },
@@ -440,7 +642,26 @@ const BANCO = {
           { texto: 'Some schools have banned phones in classrooms. Do you think this is a good policy? Explain your opinion.', audio: '' },
         ] },
     ] },
-    S2: { titulo: 'Speaking 2', itens: [] },
+    S2: { titulo: 'Speaking 2', itens: [
+      { tipo: 'repetir', cenario: 'You are starting a job as a hotel receptionist. Listen to your manager and repeat what she says. Repeat only once.', cena: '🏨 🛎️ 🧳 🔑', imagem: '',
+        frases: [
+          { texto: 'Good evening, and welcome to our hotel.', audio: '', tempo: 8 },
+          { texto: 'Breakfast is served from seven to ten.', audio: '', tempo: 8 },
+          { texto: 'Your room is on the fourth floor.', audio: '', tempo: 8 },
+          { texto: 'The swimming pool is open until nine p.m.', audio: '', tempo: 10 },
+          { texto: 'Please show your key card when you enter the gym.', audio: '', tempo: 10 },
+          { texto: 'If you need anything during the night, just call the front desk.', audio: '', tempo: 12 },
+          { texto: 'Checkout is at eleven, but you can leave your bags with us after that.', audio: '', tempo: 15 },
+        ] },
+      { tipo: 'entrevista', tempo: 45, cena: '🌍 🎓 💬',
+        contexto: 'You are being interviewed for a university program that brings international students together. The interviewer will ask you some questions.',
+        perguntas: [
+          { texto: 'Can you tell me a little about yourself and what you like to do in your free time?', audio: '' },
+          { texto: 'Why do you think it is important to learn about other cultures?', audio: '' },
+          { texto: 'Describe a challenge you faced while learning English and how you dealt with it.', audio: '' },
+          { texto: 'Some people believe students should spend a year working before going to university. What do you think?', audio: '' },
+        ] },
+    ] },
     S3: { titulo: 'Speaking 3', itens: [] },
     S4: { titulo: 'Speaking 4', itens: [] },
   },
@@ -448,7 +669,7 @@ const BANCO = {
 
 const COMPLETOS = [
   { id: 'C1', titulo: 'Simulado Completo 1', reading: 'R1', listening: 'L1', writing: 'W1', speaking: 'S1' },
-  { id: 'C2', titulo: 'Simulado Completo 2', reading: '', listening: '', writing: '', speaking: '' },
+  { id: 'C2', titulo: 'Simulado Completo 2', reading: 'R2', listening: 'L2', writing: 'W2', speaking: 'S2' },
   { id: 'C3', titulo: 'Simulado Completo 3', reading: '', listening: '', writing: '', speaking: '' },
   { id: 'C4', titulo: 'Simulado Completo 4', reading: '', listening: '', writing: '', speaking: '' },
 ];
@@ -498,23 +719,79 @@ const media05 = arr => Math.round((arr.reduce((a, b) => a + b, 0) / arr.length) 
    ÁUDIO (arquivo gravado pela Denise; se não houver, o navegador lê a transcrição)
    ===================================================================== */
 let audioAtual = null;
-function pararAudio() { if (audioAtual) { audioAtual.pause(); audioAtual = null; } if ('speechSynthesis' in window) speechSynthesis.cancel(); }
-function tocar(src, texto) {
-  pararAudio();
+let tocandoId = 0;
+function pararAudio() { tocandoId++; if (audioAtual) { audioAtual.pause(); audioAtual = null; } if ('speechSynthesis' in window) speechSynthesis.cancel(); }
+const pausa = ms => new Promise(r => setTimeout(r, ms));
+function tocarArquivo(src) {
   return new Promise(resolve => {
-    if (src) {
-      audioAtual = new Audio(src);
-      audioAtual.onended = () => resolve(); audioAtual.onerror = () => resolve();
-      audioAtual.play().catch(() => resolve());
-    } else if ('speechSynthesis' in window && texto) {
-      const u = new SpeechSynthesisUtterance(texto.replace(/^[A-Z][\w .]{0,20}:\s*/gm, ''));
-      u.lang = 'en-US'; u.rate = 0.95;
-      const v = speechSynthesis.getVoices().find(v => /en-US/i.test(v.lang)); if (v) u.voice = v;
-      u.onend = () => resolve(); u.onerror = () => resolve();
-      speechSynthesis.speak(u);
-      setTimeout(resolve, 2000 + texto.length * 90); // segurança caso o navegador não dispare onend
-    } else resolve();
+    audioAtual = new Audio(src);
+    audioAtual.onended = () => resolve(); audioAtual.onerror = () => resolve();
+    audioAtual.play().catch(() => resolve());
   });
+}
+function falarNavegador(texto) {
+  return new Promise(resolve => {
+    if (!('speechSynthesis' in window)) return resolve();
+    let feito = false; const fim = () => { if (!feito) { feito = true; resolve(); } };
+    const u = new SpeechSynthesisUtterance(texto.replace(/^[A-Z][\w .]{0,20}:\s*/gm, ''));
+    u.lang = 'en-US'; u.rate = 0.95;
+    const v = speechSynthesis.getVoices().find(v => /en-US/i.test(v.lang)); if (v) u.voice = v;
+    u.onend = fim; u.onerror = fim;
+    speechSynthesis.speak(u);
+    setTimeout(fim, 2000 + texto.length * 90); // segurança caso o navegador não dispare onend
+  });
+}
+
+/* Vozes naturais (OpenAI) — cada personagem da conversa ganha uma voz própria */
+const VOZ_PAPEL = { woman: 'nova', man: 'onyx', professor: 'fable', student: 'echo', narrator: 'alloy' };
+function segmentosVoz(texto, vozPadrao) {
+  const mapa = {}, extras = ['shimmer', 'echo', 'alloy']; let k = 0; const segs = [];
+  String(texto).split('\n').map(l => l.trim()).filter(Boolean).forEach(l => {
+    const m = l.match(/^([A-Z][\w .]{0,20}):\s*(.+)$/);
+    let voz = vozPadrao, fala = l;
+    if (m) { const chave = m[1].trim().toLowerCase(); voz = mapa[chave] || (mapa[chave] = VOZ_PAPEL[chave.split(' ')[0]] || extras[k++ % extras.length]); fala = m[2]; }
+    const ult = segs[segs.length - 1];
+    if (ult && ult.voz === voz && !m) ult.texto += ' ' + fala; else segs.push({ voz, texto: fala });
+  });
+  return segs;
+}
+const cacheVoz = new Map();
+function hashTexto(t) { let h = 2166136261; for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36) + t.length; }
+async function urlVoz(texto, voz) {
+  const chave = voz + '|' + texto;
+  if (cacheVoz.has(chave)) return cacheVoz.get(chave);
+  const p = (async () => {
+    const req = '/__toefl-voz/' + hashTexto(chave);
+    let cache = null;
+    try { cache = await caches.open('toefl-voz-v1'); const hit = await cache.match(req); if (hit) return URL.createObjectURL(await hit.blob()); } catch {}
+    const r = await fetch(`${API}?acao=voz`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ texto, voz, token: (sessao() || {}).token }) });
+    if (!r.ok) throw new Error('voz indisponível');
+    const blob = await r.blob();
+    try { if (cache) await cache.put(req, new Response(blob, { headers: { 'Content-Type': 'audio/mpeg' } })); } catch {}
+    return URL.createObjectURL(blob);
+  })();
+  cacheVoz.set(chave, p);
+  p.catch(() => cacheVoz.delete(chave));
+  return p;
+}
+function preCarregarVoz(texto, vozPadrao = 'nova') {
+  if (!IA_ATIVA || !sessao() || !texto) return;
+  segmentosVoz(texto, vozPadrao).forEach(sg => urlVoz(sg.texto, sg.voz).catch(() => {}));
+}
+async function tocar(src, texto, vozPadrao = 'nova') {
+  pararAudio(); const id = tocandoId;
+  if (src) return tocarArquivo(src);
+  if (!texto) return;
+  if (IA_ATIVA && sessao()) {
+    try {
+      const segs = segmentosVoz(texto, vozPadrao);
+      const urls = await Promise.all(segs.map(sg => urlVoz(sg.texto, sg.voz)));
+      for (const u of urls) { if (id !== tocandoId) return; await tocarArquivo(u); await pausa(300); }
+      return;
+    } catch (e) { console.warn('Voz de IA indisponível, usando a do navegador.', e); }
+  }
+  if (id !== tocandoId) return;
+  return falarNavegador(texto);
 }
 
 /* =====================================================================
@@ -561,7 +838,7 @@ function iniciar(modo, ref) {
     state.secoes = ORDEM.map(sec => ({ sec, id: ref[sec] }));
     state.titulo = ref.titulo; state.simId = ref.id;
   }
-  state.iSec = 0; state.resultados = {}; state.inicio = Date.now();
+  state.iSec = 0; state.resultados = {}; state.inicio = Date.now(); state.cancelado = false;
   mostrarIntroSecao();
 }
 
@@ -578,7 +855,6 @@ function mostrarIntroSecao() {
   if (sec === 'writing') html += '<p class="note">O e-mail e o post da discussão têm tempo próprio (7 e 10 min) e passam sozinhos quando o tempo acaba.</p>';
   if (sec === 'speaking') html += '<p class="note">🎙️ O navegador vai pedir acesso ao microfone. A gravação começa sozinha depois do áudio.</p>';
   $('intro-body').innerHTML = html;
-  $('intro-voltar').style.display = state.iSec === 0 ? '' : 'none';
   show('screen-intro');
 }
 
@@ -726,13 +1002,16 @@ function renderTela() {
       <div class="center"><button class="btn" id="ab-play">▶ ${rep ? 'Ouvir a frase' : 'Ouvir a pergunta'}</button><p class="note mt" id="ab-st"></p></div>
       <div class="resptime"><div class="rt-h">RESPONSE TIME</div><div class="rt-b"><span class="mic" id="rt-mic">🎙️</span><span id="rt-t">00:00:${String(seg).padStart(2, '0')}</span></div></div>`;
     btn.disabled = true;
+    if (!item.audio) preCarregarVoz(item.texto, rep ? 'nova' : 'echo');
     $('ab-play').onclick = async () => {
       $('ab-play').style.display = 'none'; $('ab-st').textContent = 'Ouvindo...';
-      await tocar(item.audio, item.texto);
+      await tocar(item.audio, item.texto, rep ? 'nova' : 'echo');
+      if (state.cancelado || !$('ab-st')) return;
       $('ab-st').innerHTML = '<span class="rec"><i></i> Gravando — fale agora</span> <button class="btn sm ghost" id="ab-stop" style="margin-left:8px">Terminei</button>';
       $('rt-mic').classList.add('on');
       $('ab-stop').onclick = () => state.pararGravacao && state.pararGravacao();
       const blob = await gravar(seg, r => { const t = $('rt-t'); if (t && r >= 0) t.textContent = '00:00:' + String(r).padStart(2, '0'); });
+      if (state.cancelado || !$('rt-mic')) return;
       state.resp.blob = blob; state.resp.prompt = item.texto;
       if ($('rt-mic')) $('rt-mic').classList.remove('on');
       if ($('ab-st')) $('ab-st').textContent = '✅ Resposta gravada.';
@@ -756,6 +1035,7 @@ function audioBoxHTML(img, ic) {
 }
 function ligarAudio(src, txt, depois) {
   const max = OUVIR_MAX[state.modo];
+  if (!src) preCarregarVoz(txt);
   $('ab-play').onclick = async () => {
     state.ouvidas++; $('ab-play').disabled = true; $('ab-main').textContent = 'Ouvindo...';
     await tocar(src, txt);
@@ -885,12 +1165,12 @@ async function finalizar() {
   ORDEM.forEach(s => {
     const r = res[s]; if (!r) return;
     if (r.banda != null) b += `<div class="band"><div class="n">${r.banda.toFixed(1)}</div><div class="k">${SECOES[s].nome}</div><div class="s">${r.acertos}/${r.total} acertos${r.caminho && r.caminho !== 'base' ? ' · módulo ' + (r.caminho === 'dificil' ? 'difícil' : 'fácil') : ''}</div></div>`;
-    else b += `<div class="band"><div class="n">⏳</div><div class="k">${SECOES[s].nome}</div><div class="s">correção da Denise</div></div>`;
+    else b += `<div class="band" id="band-${s}"><div class="n">⏳</div><div class="k">${SECOES[s].nome}</div><div class="s">${IA_ATIVA ? 'corrigindo com IA...' : 'correção da Denise'}</div></div>`;
   });
   if (state.modo === 'completo' && geral != null) b = `<div class="band main"><div class="n">${geral.toFixed(1)}</div><div class="k">Geral (parcial)</div><div class="s">média de Reading e Listening</div></div>` + b;
   $('res-bands').innerHTML = b;
 
-  let h = '<div class="card"><p class="note">As notas de 1 a 6 são uma <b>estimativa</b> com base nos seus acertos, não a tabela oficial da ETS. Writing e Speaking são corrigidos pela Denise.</p></div>';
+  let h = '<div class="card"><p class="note">As notas de 1 a 6 são uma <b>estimativa</b> com base nos seus acertos, não a tabela oficial da ETS. ' + (IA_ATIVA ? 'Writing e Speaking são corrigidos pela IA e podem ser revisados pela Denise.' : 'Writing e Speaking são corrigidos pela Denise.') + '</p></div>';
   ORDEM.forEach(s => {
     const r = res[s]; if (!r) return;
     h += `<div class="card"><h2 style="font-size:22px;margin-bottom:8px">${SECOES[s].emoji} ${SECOES[s].nome}</h2>`;
@@ -942,8 +1222,10 @@ async function enviar(registro, res) {
   }
   const payload = { simulado: state.titulo, simId: state.simId, modo: state.modo, geral: registro.geralParcial, duracaoMin: Math.round((Date.now() - state.inicio) / 60000), secoes };
   try {
-    await api('enviar', payload);
+    const env = await api('enviar', payload);
     st.textContent = '✓ Resultado enviado para a Denise.';
+    const temProducao = Object.values(res).some(r => r.textos.length || r.gravacoes.some(g => g.blob));
+    if (IA_ATIVA && env.pageId && temProducao) corrigirComIA(env.pageId, res);
   } catch (e) {
     try { const f = JSON.parse(localStorage.getItem('toefl_fila_' + chaveAluno())) || []; f.push(payload); localStorage.setItem('toefl_fila_' + chaveAluno(), JSON.stringify(f.slice(-10))); } catch {}
     st.textContent = (e.expirada ? '⚠ Sua sessão expirou. Saia e entre de novo com o Google: o resultado será enviado automaticamente.' : '⚠ Não foi possível enviar agora. Vou tentar de novo quando você voltar à plataforma.') + (Object.values(res).some(r => r.gravacoes.length) ? ' Baixe suas gravações e mande para a Denise pelo WhatsApp.' : '');
@@ -986,11 +1268,12 @@ function renderHome() {
   });
 
   renderDados();
+  renderFeedbacks();
 }
 
-let histRemoto = null;
+let histRemoto = null, perfilRemoto = null;
 async function carregarHistoricoRemoto() {
-  try { histRemoto = (await api('historico', {})).itens; renderHome(); }
+  try { const r = await api('historico', {}); histRemoto = r.itens; perfilRemoto = r.perfil || null; renderHome(); }
   catch (e) { if (e.expirada) sair(); }
 }
 async function reenviarFila() {
@@ -999,18 +1282,286 @@ async function reenviarFila() {
   for (const p of f) { try { await api('enviar', p); } catch { resto.push(p); } }
   localStorage.setItem('toefl_fila_' + chaveAluno(), JSON.stringify(resto));
 }
+
+/* =====================================================================
+   MEU DESEMPENHO
+   ===================================================================== */
+const COR_SEC = { reading: '#2f6fde', listening: '#8b5cf6', writing: '#16a34a', speaking: '#e2559b' };
+const SEC_DO_TIPO = Object.fromEntries(Object.values(TIPOS).map(t => [t.nome, t.sec]));
+const n1 = v => v == null ? '—' : (Math.round(v * 2) / 2).toFixed(1).replace('.', ',');
+
+// Dicas práticas por tipo de tarefa (mostradas na recomendação)
+const DICAS = {
+  'Complete the Words': ['Leia a frase inteira antes de completar: o contexto diz a classe da palavra (verbo, substantivo, plural).', 'Revise sufixos comuns (-tion, -ment, -ly, -ed, -ing) e palavras curtas como the, that, with, which.'],
+  'Read in Daily Life': ['Leia a pergunta primeiro e procure no texto só a informação pedida (datas, horários, condições).', 'Em perguntas "NOT mentioned", risque mentalmente cada alternativa que aparece no texto.'],
+  'Read an Academic Passage': ['Faça um mini-resumo de 1 linha de cada parágrafo enquanto lê.', 'Em "Why does the author mention…", pergunte-se: isso é exemplo, contraste ou evidência?'],
+  'Listen and Choose a Response': ['Preste atenção na intenção da fala (pedido, sugestão, reclamação), não só nas palavras.', 'Desconfie da alternativa que repete palavras do áudio: costuma ser pegadinha.'],
+  'Listen to a Conversation': ['Anote em 3 palavras: qual é o problema, qual é a solução e o que vai acontecer depois.', 'Repare no tom de quem fala: concordar, hesitar e ironizar mudam a resposta.'],
+  'Listen to an Announcement': ['Foque em mudanças (de lugar, horário, regra) e no motivo de cada mudança.', 'Anote o que o ouvinte precisa fazer: trazer, reservar, chegar em tal horário.'],
+  'Listen to an Academic Talk': ['Anote a ideia principal nos primeiros 20 segundos: o professor quase sempre anuncia o tema.', 'Marque exemplos e experimentos: as perguntas costumam pedir para que eles servem.'],
+  'Build a Sentence': ['Encontre primeiro o sujeito e o verbo; depois encaixe o resto.', 'Cuidado com o distrator: geralmente é a mesma palavra em outra forma (send/sends, then/than).'],
+  'Write an Email': ['Responda os 3 pontos pedidos, um por parágrafo curto.', 'Use abertura e fechamento formais e conectores (Firstly, In addition, I would appreciate if…).'],
+  'Write for an Academic Discussion': ['Dê sua opinião logo na primeira frase e cite um colega (I agree with Priya that…).', 'Traga um exemplo concreto e novo: escreva pelo menos 100 palavras.'],
+  'Listen and Repeat': ['Grave-se repetindo frases de séries e compare a entonação.', 'Repita em blocos de sentido (chunks), não palavra por palavra.'],
+  'Take an Interview': ['Use a estrutura: opinião → motivo → exemplo pessoal → conclusão.', 'Pratique falar 45 segundos sem parar com um cronômetro.'],
+};
+
+function analisarDesempenho(hist, perfil) {
+  const asc = hist.slice().sort((a, b) => (a.quando || 0) - (b.quando || 0));
+  const meta = perfil && perfil.meta != null ? perfil.meta : null;
+  const res = {};
+  ORDEM.forEach(sec => {
+    const vals = asc.filter(r => r[sec] != null).map(r => r[sec]);
+    const tipos = {};
+    asc.forEach(r => Object.entries(r.porTipo || {}).forEach(([n, v]) => {
+      if (SEC_DO_TIPO[n] !== sec) return;
+      tipos[n] = tipos[n] || { a: 0, t: 0 }; tipos[n].a += v.a; tipos[n].t += v.t;
+    }));
+    const a = Object.values(tipos).reduce((s, v) => s + v.a, 0), t = Object.values(tipos).reduce((s, v) => s + v.t, 0);
+    const aguardando = (sec === 'writing' || sec === 'speaking') && asc.some(r => r.correcao === 'Aguardando correção' && r[sec] == null && (r.modo === 'completo' || (r.simId || '')[0] === sec[0].toUpperCase()));
+    const atual = vals.length ? vals[vals.length - 1] : null;
+    const anterior = vals.length > 1 ? vals[vals.length - 2] : null;
+    const acc = t ? a / t : null;
+    const fraco = Object.entries(tipos).filter(([, v]) => v.t >= 2).sort((x, y) => x[1].a / x[1].t - y[1].a / y[1].t)[0];
+    let score, motivo;
+    if (atual == null && acc == null) { score = aguardando ? 0.4 : 1.6; motivo = aguardando ? 'aguardando' : 'nunca'; }
+    else { score = (atual != null ? (meta ?? 5) - atual : 0.8) + (acc != null ? (1 - acc) * 2 : 0); motivo = 'nota'; }
+    res[sec] = { sec, atual, anterior, acc, tipos, fraco: fraco ? { nome: fraco[0], pct: fraco[1].a / fraco[1].t } : null, score, motivo, aguardando, tentativas: vals.length };
+  });
+  const ranking = ORDEM.map(s => res[s]).sort((a, b) => b.score - a.score);
+  return { res, ranking, meta };
+}
+
+function simuladoSugerido(sec, hist) {
+  const feitos = new Set(hist.map(h => h.simId));
+  const disp = Object.entries(BANCO[sec]).filter(([id]) => itensDaSecao(sec, id) > 0);
+  if (!disp.length) return null;
+  const novo = disp.find(([id]) => !feitos.has(id));
+  if (novo) return { id: novo[0], titulo: novo[1].titulo, novo: true };
+  const pior = disp.map(([id, s]) => ({ id, titulo: s.titulo, nota: (hist.find(h => h.simId === id) || {})[sec] ?? 0 })).sort((a, b) => a.nota - b.nota)[0];
+  return { ...pior, novo: false };
+}
+
+function graficoEvolucao(hist, meta) {
+  const asc = hist.slice().sort((a, b) => (a.quando || 0) - (b.quando || 0)).filter(r => ORDEM.some(s => r[s] != null));
+  if (asc.length < 2) return '<p class="note">O gráfico aparece a partir do segundo simulado com nota.</p>';
+  const W = 640, H = 230, L = 34, R = 14, T = 12, B = 34;
+  const x = i => L + (asc.length === 1 ? 0 : i * (W - L - R) / (asc.length - 1));
+  const y = v => T + (6 - v) * (H - T - B) / 5;
+  let g = '';
+  for (let v = 1; v <= 6; v++) g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#ece7df"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="#8a847c">${v}</text>`;
+  if (meta != null) g += `<line x1="${L}" x2="${W - R}" y1="${y(meta)}" y2="${y(meta)}" stroke="#ff6a00" stroke-dasharray="5 4"/><text x="${W - R}" y="${y(meta) - 5}" text-anchor="end" font-size="11" fill="#ff6a00" font-weight="700">meta ${n1(meta)}</text>`;
+  asc.forEach((r, i) => g += `<text x="${x(i)}" y="${H - 12}" text-anchor="middle" font-size="10.5" fill="#8a847c">${esc((r.data || '').slice(0, 5))}</text>`);
+  ORDEM.forEach(sec => {
+    const pts = asc.map((r, i) => r[sec] != null ? [x(i), y(r[sec]), r[sec]] : null).filter(Boolean);
+    if (!pts.length) return;
+    if (pts.length > 1) g += `<polyline fill="none" stroke="${COR_SEC[sec]}" stroke-width="2.5" stroke-linejoin="round" points="${pts.map(p => p[0] + ',' + p[1]).join(' ')}"/>`;
+    pts.forEach(p => g += `<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="#fff" stroke="${COR_SEC[sec]}" stroke-width="2.5"><title>${SECOES[sec].nome}: ${n1(p[2])}</title></circle>`);
+  });
+  const leg = ORDEM.filter(s => asc.some(r => r[s] != null)).map(s => `<span class="lg"><i style="background:${COR_SEC[s]}"></i>${SECOES[s].nome}</span>`).join('');
+  return `<div style="overflow-x:auto"><svg viewBox="0 0 ${W} ${H}" style="width:100%;min-width:520px;height:auto" role="img" aria-label="Evolução das notas por habilidade">${g}</svg></div><div class="legend">${leg}</div>`;
+}
+
 function renderDados() {
   const hist = histRemoto && histRemoto.length ? histRemoto : historico();
-  if (!hist.length) { $('pane-data').innerHTML = '<div class="card center"><p style="font-size:34px">📊</p><p>Seus resultados aparecem aqui depois do primeiro simulado.</p></div>'; return; }
-  const agg = {};
-  hist.forEach(r => Object.entries(r.porTipo || {}).forEach(([n, v]) => { agg[n] = agg[n] || { a: 0, t: 0 }; agg[n].a += v.a; agg[n].t += v.t; }));
-  let h = '<div class="card"><h2 style="font-size:22px;margin-bottom:4px">Acertos por tipo de tarefa</h2><p class="note" style="margin-bottom:10px">Somando todos os simulados. As barras mais curtas mostram o que treinar.</p>';
-  Object.entries(agg).sort((a, b) => a[1].a / a[1].t - b[1].a / b[1].t).forEach(([n, v]) => {
-    const p = Math.round(v.a / v.t * 100); h += `<div class="bar"><span class="nm">${esc(n)}</span><span class="tr"><i style="width:${p}%"></i></span><span class="pc">${p}%</span></div>`;
+  const perfil = perfilRemoto || {};
+  if (!hist.length) { $('pane-data').innerHTML = '<div class="card center"><p style="font-size:34px">📊</p><p>Seus resultados aparecem aqui depois do primeiro simulado.</p><p class="note mt">Comece por qualquer habilidade na aba 🎯 Por habilidade.</p></div>'; return; }
+  const { res, ranking, meta } = analisarDesempenho(hist, perfil);
+  let h = '';
+
+  // 1. Contagem regressiva + meta
+  const chips = [];
+  if (perfil.dataProva) {
+    const dias = Math.ceil((new Date(perfil.dataProva + 'T12:00:00') - new Date()) / 86400000);
+    if (dias >= 0) chips.push(`<div class="chip big"><b>${dias}</b> ${dias === 1 ? 'dia' : 'dias'} para a prova <span>${new Date(perfil.dataProva + 'T12:00:00').toLocaleDateString('pt-BR')}</span></div>`);
+  }
+  if (meta != null) chips.push(`<div class="chip big">🎯 Sua meta: <b>${n1(meta)}</b></div>`);
+  chips.push(`<div class="chip big"><b>${hist.length}</b> ${hist.length === 1 ? 'simulado feito' : 'simulados feitos'}</div>`);
+  h += `<div class="chips">${chips.join('')}</div>`;
+
+  // 2. Cartões por habilidade
+  h += '<div class="skillcards">' + ORDEM.map(sec => {
+    const r = res[sec]; const c = COR_SEC[sec];
+    let sub = '';
+    if (r.atual == null) sub = r.aguardando ? '⏳ aguardando correção' : 'ainda sem nota';
+    else if (meta != null) sub = r.atual >= meta ? '✓ meta atingida' : `faltam ${n1(meta - r.atual)} para a meta`;
+    else sub = `${r.tentativas} ${r.tentativas === 1 ? 'tentativa' : 'tentativas'}`;
+    let delta = '';
+    if (r.atual != null && r.anterior != null && r.atual !== r.anterior) delta = r.atual > r.anterior ? `<span class="up">▲ ${n1(r.atual - r.anterior)}</span>` : `<span class="down">▼ ${n1(r.anterior - r.atual)}</span>`;
+    const pct = r.atual != null ? (r.atual - 1) / 5 * 100 : 0;
+    return `<div class="sk" style="--c:${c}"><div class="sk-h">${SECOES[sec].emoji} ${SECOES[sec].nome}</div>
+      <div class="sk-n">${n1(r.atual)} ${delta}</div>
+      <div class="sk-bar"><i style="width:${pct}%"></i>${meta != null ? `<b style="left:${(meta - 1) / 5 * 100}%"></b>` : ''}</div>
+      <div class="sk-s">${sub}</div></div>`;
+  }).join('') + '</div>';
+
+  // 3. Recomendação
+  const top = ranking[0]; const sug = simuladoSugerido(top.sec, hist);
+  let porque;
+  if (top.motivo === 'nunca') porque = `Você ainda não fez nenhum simulado de <b>${SECOES[top.sec].nome}</b>. Fazer um agora mostra seu nível nessa habilidade e completa o seu diagnóstico.`;
+  else {
+    const partes = [];
+    const notas = ORDEM.map(s => res[s].atual).filter(v => v != null);
+    const maisBaixa = top.atual != null && top.atual <= Math.min(...notas);
+    if (top.atual != null) partes.push(`${maisBaixa ? 'é a sua nota mais baixa no momento' : 'está com nota'} <b>${n1(top.atual)}</b>${meta != null && top.atual < meta ? ` (${n1(meta - top.atual)} abaixo da meta)` : ''}`);
+    if (top.acc != null) partes.push(`você acertou só <b>${Math.round(top.acc * 100)}%</b> das questões dessa habilidade`);
+    porque = `<b>${SECOES[top.sec].nome}</b> ${partes.join(' e ')}, a combinação que mais pede atenção agora.`;
+    if (top.fraco) porque += ` O tipo de tarefa em que você mais erra é <b>${esc(top.fraco.nome)}</b> (${Math.round(top.fraco.pct * 100)}% de acerto).`;
+  }
+  const dicas = top.fraco ? (DICAS[top.fraco.nome] || []) : (Object.entries(TIPOS).filter(([, t]) => t.sec === top.sec).map(([, t]) => (DICAS[t.nome] || [])[0]).filter(Boolean).slice(0, 2));
+  h += `<div class="reco" style="--c:${COR_SEC[top.sec]}">
+    <div class="reco-k">📌 O que estudar agora</div>
+    <h2>${SECOES[top.sec].emoji} Foque em ${SECOES[top.sec].nome}</h2>
+    <p>${porque}</p>
+    ${dicas.length ? `<div class="reco-tips"><b>Como treinar${top.fraco ? ' ' + esc(top.fraco.nome) : ''}:</b><ul>${dicas.map(d => `<li>${esc(d)}</li>`).join('')}</ul></div>` : ''}
+    ${sug ? `<button class="btn" id="reco-go" data-sec="${top.sec}" data-id="${sug.id}">Fazer ${esc(sug.titulo)} ${sug.novo ? 'agora' : 'de novo'} →</button>` : ''}
+    <div class="reco-rank"><span class="note">Prioridade de estudo:</span> ${ranking.map((r, i) => `<span class="rk${i === 0 ? ' on' : ''}">${i + 1}. ${SECOES[r.sec].nome}</span>`).join('')}</div>
+  </div>`;
+
+  // 4. Evolução
+  h += `<div class="card"><h2 style="font-size:22px;margin-bottom:8px">Evolução das notas</h2>${graficoEvolucao(hist, meta)}</div>`;
+
+  // 5. Acertos por tipo, agrupados por habilidade
+  h += '<div class="card"><h2 style="font-size:22px;margin-bottom:4px">Acertos por tipo de tarefa</h2><p class="note" style="margin-bottom:10px">Somando todos os simulados. As barras mais curtas mostram o que treinar.</p>';
+  ORDEM.forEach(sec => {
+    const ts = Object.entries(res[sec].tipos); if (!ts.length) return;
+    h += `<div class="grp" style="--c:${COR_SEC[sec]}">${SECOES[sec].emoji} ${SECOES[sec].nome}</div>`;
+    ts.sort((a, b) => a[1].a / a[1].t - b[1].a / b[1].t).forEach(([n, v]) => {
+      const p = Math.round(v.a / v.t * 100);
+      h += `<div class="bar"><span class="nm">${esc(n)}</span><span class="tr"><i style="width:${p}%;background:${p < 60 ? '#e05252' : COR_SEC[sec]}"></i></span><span class="pc">${p}%</span></div>`;
+    });
   });
-  h += '</div><div class="card"><h2 style="font-size:22px;margin-bottom:8px">Histórico</h2><table><tr><th>Data</th><th>Simulado</th><th>R</th><th>L</th><th>W</th><th>S</th><th>Geral</th></tr>';
-  hist.forEach(r => h += `<tr><td>${r.data}</td><td>${esc(r.simulado)}</td><td>${r.reading != null ? r.reading.toFixed(1) : '—'}</td><td>${r.listening != null ? r.listening.toFixed(1) : '—'}</td><td>${r.writing != null ? r.writing.toFixed(1) : (r.correcao === 'Aguardando correção' ? '⏳' : '—')}</td><td>${r.speaking != null ? r.speaking.toFixed(1) : (r.correcao === 'Aguardando correção' ? '⏳' : '—')}</td><td>${r.modo === 'completo' && r.geralParcial != null ? r.geralParcial.toFixed(1) : '—'}</td></tr>`);
-  $('pane-data').innerHTML = h + '</table></div>';
+  h += '</div>';
+
+  // 6. Histórico com feedback
+  h += '<div class="card"><h2 style="font-size:22px;margin-bottom:8px">Histórico</h2><div style="overflow-x:auto"><table><tr><th>Data</th><th>Simulado</th><th>R</th><th>L</th><th>W</th><th>S</th><th>Geral</th></tr>';
+  hist.forEach(r => {
+    const pend = r.correcao === 'Aguardando correção' ? '⏳' : '—';
+    const geral = r.notaFinal != null ? r.notaFinal : (r.modo === 'completo' ? r.geralParcial : null);
+    h += `<tr><td>${esc(r.data)}</td><td>${esc(r.simulado)}</td><td>${n1(r.reading)}</td><td>${n1(r.listening)}</td><td>${r.writing != null ? n1(r.writing) : pend}</td><td>${r.speaking != null ? n1(r.speaking) : pend}</td><td><b>${n1(geral)}</b></td></tr>`;
+    if (r.feedback) h += `<tr class="fb"><td colspan="7">💬 <b>Denise:</b> ${esc(r.feedback)}</td></tr>`;
+  });
+  $('pane-data').innerHTML = h + '</table></div></div>';
+  const go = $('reco-go'); if (go) go.onclick = () => iniciar('habilidade', { sec: go.dataset.sec, id: go.dataset.id });
+}
+
+
+
+/* =====================================================================
+   CORREÇÃO AUTOMÁTICA COM IA (Writing e Speaking)
+   ===================================================================== */
+let IA_ATIVA = false, configCache = null;
+async function carregarConfig() {
+  if (configCache) return configCache;
+  try { configCache = await (await fetch(`${API}?acao=config`)).json(); IA_ATIVA = !!configCache.ia; } catch { configCache = {}; }
+  return configCache;
+}
+const blobBase64 = blob => new Promise((ok, erro) => { const fr = new FileReader(); fr.onload = () => ok(String(fr.result).split(',')[1] || ''); fr.onerror = erro; fr.readAsDataURL(blob); });
+
+async function corrigirComIA(pageId, res) {
+  const box = document.createElement('div'); box.className = 'card iacard'; box.id = 'ia-box';
+  box.innerHTML = '<div class="ia-h">🤖 Correção automática</div><p id="ia-st">Preparando...</p><div class="progress light"><i id="ia-prog"></i></div>';
+  $('res-body').prepend(box);
+  const st = t => { const e = $('ia-st'); if (e) e.textContent = t; };
+  const textos = [], repetir = [], entrevista = [];
+  ORDEM.forEach(sec => { const r = res[sec]; if (!r) return; r.textos.forEach(t => textos.push({ nome: t.nome, prompt: t.prompt, texto: t.texto })); });
+  const grav = ORDEM.flatMap(sec => res[sec] ? res[sec].gravacoes : []);
+  try {
+    for (let i = 0; i < grav.length; i++) {
+      const g = grav[i];
+      st(`Ouvindo suas gravações (${i + 1} de ${grav.length})...`);
+      $('ia-prog').style.width = Math.round((i / (grav.length + 1)) * 100) + '%';
+      let ouvido = '';
+      if (g.blob) { try { ouvido = (await api('transcrever', { audio: await blobBase64(g.blob), mime: g.blob.type })).texto; } catch (e) { if (/OPENAI|desligada/.test(e.message)) throw e; } }
+      if (g.tipo === 'repetir') repetir.push({ frase: g.prompt, ouvido });
+      else entrevista.push({ pergunta: g.prompt, resposta: ouvido });
+    }
+    st(textos.length ? 'Corrigindo seus textos e respostas...' : 'Avaliando suas respostas...');
+    $('ia-prog').style.width = '90%';
+    const c = await api('corrigir', { pageId, textos, repetir, entrevista });
+    box.innerHTML = correcaoHTML(c);
+    [['writing', c.writing], ['speaking', c.speaking]].forEach(([sec, v]) => {
+      const el = $('band-' + sec); if (el && v != null) el.innerHTML = `<div class="n">${n1(v)}</div><div class="k">${SECOES[sec].nome}</div><div class="s">corrigido pela IA</div>`;
+    });
+    setTimeout(carregarHistoricoRemoto, 1500);
+  } catch (e) {
+    box.innerHTML = `<div class="ia-h">🤖 Correção automática</div><p class="note">Não foi possível corrigir automaticamente agora (${esc(e.message)}). Suas respostas já estão com a Denise e você recebe o feedback na aba 💬 Feedbacks.</p>`;
+    ['writing', 'speaking'].forEach(sec => { const el = $('band-' + sec); if (el) el.querySelector('.s').textContent = 'correção da Denise'; });
+  }
+}
+
+function correcaoHTML(c) {
+  let h = '<div class="ia-h">🤖 Correção automática</div><p class="note" style="margin-bottom:10px">Feita por inteligência artificial com os critérios do TOEFL. A Denise pode revisar e ajustar a sua nota.</p>';
+  h += '<div class="bands" style="margin:8px 0 4px">';
+  if (c.writing != null) h += `<div class="band"><div class="n">${n1(c.writing)}</div><div class="k">Writing</div></div>`;
+  if (c.speaking != null) h += `<div class="band"><div class="n">${n1(c.speaking)}</div><div class="k">Speaking</div></div>`;
+  h += '</div>';
+  (c.textos || []).forEach(t => {
+    h += `<div class="fbb"><div class="fbb-h">✍️ ${esc(t.nome)} · ${n1(t.banda)}</div><div class="fbb-t">${esc(t.comentario)}</div>`;
+    if (t.correcoes && t.correcoes.length) h += '<div class="corr">' + t.correcoes.map(x => `<div><s>${esc(x.original)}</s> → <b>${esc(x.correto)}</b><span class="note"> · ${esc(x.explicacao)}</span></div>`).join('') + '</div>';
+    h += '</div>';
+  });
+  if (c.dicaWriting) h += `<p class="dica">👉 ${esc(c.dicaWriting)}</p>`;
+  if ((c.repetir || []).length) {
+    h += `<div class="fbb"><div class="fbb-h">🔁 Listen and Repeat · ${Math.round((c.precisaoRepeticao || 0) * 100)}% de precisão</div>`;
+    c.repetir.forEach(x => h += `<div class="rep"><span class="pct ${x.precisao >= 0.8 ? 'bom' : x.precisao >= 0.5 ? 'medio' : 'ruim'}">${Math.round(x.precisao * 100)}%</span><div><div>${esc(x.frase)}</div><div class="note">Você disse: “${esc(x.ouvido || '—')}”</div></div></div>`);
+    h += '</div>';
+  }
+  (c.entrevista || []).forEach((e, i) => h += `<div class="fbb"><div class="fbb-h">🎙️ Pergunta ${i + 1} · ${n1(e.banda)}</div><div class="note" style="margin-bottom:4px">${esc(e.pergunta)}</div><div class="fbb-t">${esc(e.comentario)}</div><details><summary class="note">Ver o que você disse</summary><p class="note">“${esc(e.resposta || '—')}”</p></details></div>`);
+  if (c.dicaSpeaking) h += `<p class="dica">👉 ${esc(c.dicaSpeaking)}</p>`;
+  if ((c.repetir || []).length || (c.entrevista || []).length) h += '<p class="note mt">A IA avalia o Speaking pela transcrição da sua fala. Pronúncia e entonação são avaliadas pela Denise.</p>';
+  return h;
+}
+
+/* =====================================================================
+   FEEDBACKS DA DENISE
+   ===================================================================== */
+const chaveVistos = () => 'toefl_fb_vistos_' + chaveAluno();
+function fbVistos() { try { return new Set(JSON.parse(localStorage.getItem(chaveVistos())) || []); } catch { return new Set(); } }
+const fbChave = r => r.id + '|' + (r.editado || '');
+function comFeedback() { return (histRemoto || []).filter(r => r.feedback || r.feedbackWriting || r.feedbackSpeaking); }
+function marcarFeedbacksVistos() {
+  const v = fbVistos(); comFeedback().forEach(r => v.add(fbChave(r)));
+  try { localStorage.setItem(chaveVistos(), JSON.stringify([...v].slice(-300))); } catch {}
+  $('fb-badge').style.display = 'none';
+}
+function renderFeedbacks() {
+  const lista = comFeedback(); const vistos = fbVistos();
+  const novos = lista.filter(r => !vistos.has(fbChave(r))).length;
+  const bd = $('fb-badge'); bd.textContent = novos; bd.style.display = novos ? '' : 'none';
+  if (!histRemoto) { $('pane-fb').innerHTML = '<div class="card center"><p style="font-size:34px">💬</p><p>Carregando seus feedbacks...</p></div>'; return; }
+  const pend = histRemoto.filter(r => r.correcao === 'Aguardando correção');
+  let h = '';
+  if (pend.length) h += `<div class="card pendente"><b>⏳ Aguardando correção da Denise</b><ul>${pend.map(r => `<li>${esc(r.simulado)} <span class="note">· ${esc(r.data)}</span></li>`).join('')}</ul><p class="note">Você recebe o feedback aqui assim que a correção for feita.</p></div>`;
+  if (!lista.length) {
+    h += '<div class="card center"><p style="font-size:34px">💬</p><p>Nenhum feedback ainda.</p><p class="note mt">Quando a Denise corrigir seu Writing e seu Speaking, os comentários dela aparecem aqui.</p></div>';
+    $('pane-fb').innerHTML = h; return;
+  }
+  lista.forEach((r, i) => {
+    const novo = !vistos.has(fbChave(r));
+    const notas = [['Writing', r.writing], ['Speaking', r.speaking], ['Geral', r.notaFinal]].filter(([, v]) => v != null)
+      .map(([k, v]) => `<span class="nota"><small>${k}</small>${n1(v)}</span>`).join('');
+    const bloco = (ic, tit, t) => t ? `<div class="fbb"><div class="fbb-h">${ic} ${tit}</div><div class="fbb-t">${esc(t)}</div></div>` : '';
+    h += `<div class="card fbcard">
+      <div class="fb-top"><div><b style="font-size:17px">${esc(r.simulado)}</b> ${novo ? '<span class="tag">novo</span>' : ''}<div class="note">${esc(r.data)}</div></div><div class="notas">${notas}</div></div>
+      ${bloco('✍️', 'Writing', r.feedbackWriting)}${bloco('🎙️', 'Speaking', r.feedbackSpeaking)}${bloco('💬', 'Comentário geral', r.feedback)}
+      <button class="btn ghost sm mt" data-det="${esc(r.id)}" data-i="${i}">📄 Ver o que eu escrevi e gravei</button>
+      <div class="det" id="det-${i}"></div></div>`;
+  });
+  $('pane-fb').innerHTML = h;
+  $('pane-fb').querySelectorAll('[data-det]').forEach(b => b.onclick = async () => {
+    const box = $('det-' + b.dataset.i);
+    if (box.dataset.ok) { box.style.display = box.style.display === 'none' ? '' : 'none'; return; }
+    box.innerHTML = '<p class="note mt">Carregando...</p>';
+    try {
+      const d = await api('detalhe', { id: b.dataset.det });
+      let x = '';
+      d.textos.forEach(t => x += `<div class="fbb mine"><div class="fbb-h">${esc(t.titulo)}</div>${t.prompt ? `<div class="note" style="margin-bottom:6px">${esc(t.prompt)}</div>` : ''}<div class="fbb-t">${esc(t.texto) || '<span class="note">(em branco)</span>'}</div></div>`);
+      if (d.gravacoes.length) x += '<div class="fbb mine"><div class="fbb-h">🎙️ Suas gravações</div>' + d.gravacoes.map(g => `<div style="margin:6px 0"><div class="note">${esc(g.descricao)}</div>${g.url ? `<audio controls preload="none" src="${esc(g.url)}" style="width:100%"></audio>` : '<span class="note">gravação enviada pelo WhatsApp</span>'}</div>`).join('') + '</div>';
+      box.innerHTML = x || '<p class="note mt">Este simulado não tem textos nem gravações.</p>';
+      box.dataset.ok = '1';
+    } catch (e) { box.innerHTML = `<p class="note mt">⚠ ${esc(e.message)}</p>`; }
+  });
 }
 
 /* =====================================================================
@@ -1018,7 +1569,7 @@ function renderDados() {
    ===================================================================== */
 /* ---------- Login Google ---------- */
 function sair() {
-  localStorage.removeItem('toefl_sessao'); histRemoto = null;
+  localStorage.removeItem('toefl_sessao'); histRemoto = null; perfilRemoto = null;
   try { google.accounts.id.disableAutoSelect(); } catch {}
   show('screen-login'); iniciarGoogle();
 }
@@ -1038,7 +1589,7 @@ async function iniciarGoogle(tent = 0) {
   if (!window.google || !google.accounts) { if (tent < 40) setTimeout(() => iniciarGoogle(tent + 1), 250); else $('login-msg').textContent = '⚠ Não consegui carregar o login do Google. Verifique a internet e recarregue a página.'; return; }
   try {
     if (!googleOk) {
-      const c = await (await fetch(`${API}?acao=config`)).json();
+      const c = await carregarConfig();
       if (!c.googleClientId) { $('login-msg').textContent = '⚠ Login ainda não configurado (falta GOOGLE_CLIENT_ID na Vercel).'; return; }
       google.accounts.id.initialize({ client_id: c.googleClientId, callback: aoLogar, auto_select: false, ux_mode: 'popup' });
       googleOk = true;
@@ -1057,13 +1608,25 @@ $('btn-sair').onclick = () => { if (confirm('Sair da sua conta?')) sair(); };
 document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t));
   document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === t.dataset.pane));
+  if (t.dataset.pane === 'pane-fb' && histRemoto) marcarFeedbacksVistos();
 });
-$('intro-voltar').onclick = () => { renderHome(); show('screen-home'); };
+$('intro-voltar').onclick = () => cancelarSimulado(state.iSec === 0);
+$('btn-cancelar').onclick = () => cancelarSimulado(false);
+function cancelarSimulado(semPerguntar) {
+  if (!semPerguntar && !confirm('Sair deste simulado? Ele será cancelado e as respostas desta tentativa não serão salvas.')) return;
+  state.cancelado = true;
+  clearInterval(timerIv); state.fimTarefa = null; state.fimSecao = null;
+  if (state.pararGravacao) { try { state.pararGravacao(); } catch {} state.pararGravacao = null; }
+  pararAudio();
+  $('stage').innerHTML = '';
+  renderHome(); show('screen-home');
+}
 $('intro-go').onclick = comecarSecao;
 $('btn-next').onclick = () => avancar(false);
 $('btn-home').onclick = () => { pararAudio(); renderHome(); show('screen-home'); setTimeout(carregarHistoricoRemoto, 1500); };
 window.addEventListener('beforeunload', e => { if ($('screen-exam').classList.contains('on')) { e.preventDefault(); e.returnValue = ''; } });
 if ('speechSynthesis' in window) speechSynthesis.getVoices();
+carregarConfig();
 if (sessao()) entrar(); else iniciarGoogle();
 </script>
 </body>

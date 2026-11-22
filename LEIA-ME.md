@@ -89,13 +89,27 @@ Sem isso, o aluno ouve e baixa as gravações no resultado para mandar pelo What
 
 ---
 
+## Correção automática com IA (Writing e Speaking)
+Adicione na Vercel `OPENAI_API_KEY` (a mesma chave da OpenAI do seu app) e faça Redeploy.
+- Speaking: cada gravação é transcrita (Whisper). Listen and Repeat é comparado palavra por palavra com a frase; as respostas da entrevista recebem nota e comentário.
+- Writing: e-mail e discussão recebem nota de 1 a 6, comentário e até 5 correções.
+- No Notion, o resultado fica como **Corrigido pela IA**, com notas e feedbacks preenchidos. Você pode revisar e mudar para **Corrigido**.
+- Opcional: `OPENAI_MODEL` (padrão `gpt-4o-mini`) e `OPENAI_TRANSCRIBE_MODEL` (padrão `whisper-1`).
+Sem a chave, tudo continua funcionando e a correção fica com você.
+
+## Áudios do Listening e do Speaking
+A plataforma escolhe o áudio nesta ordem:
+1. **Arquivo MP3 gravado por você**, quando a questão tem um `audio` (ex.: `audio: '/audios/L2-conversa.mp3'`). Os arquivos ficam na pasta `audios/` do repositório.
+2. **Voz de IA natural (OpenAI)**, se `OPENAI_API_KEY` estiver na Vercel. Cada personagem tem uma voz: Woman → feminina, Man → masculina, Professor → outra voz. O áudio fica guardado no navegador do aluno, então cada trecho só é gerado uma vez por aluno.
+3. **Voz do navegador** (mais robótica), se nenhuma das anteriores estiver disponível.
+
 ## Ajustes rápidos (topo do `toefl/index.html`)
 - `OUVIR_MAX`: quantas vezes cada áudio pode ser ouvido (2x por habilidade, 1x no completo).
 - `CORTE_ADAPTATIVO`: acerto mínimo no módulo 1 para ir ao módulo 2 difícil (60%).
 - `SECOES`: tempos de cada seção.
 
 ## Conteúdo
-Já prontos: **Reading 1, Listening 1, Writing 1, Speaking 1** e o **Simulado Completo 1** (que usa esses quatro).
+Já prontos: **conjuntos 1 e 2** (Reading, Listening, Writing e Speaking 1 e 2) e os **Simulados Completos 1 e 2**.
 Os espaços R2–R4, L2–L4, W2–W4, S2–S4 e C2–C4 aparecem como "Em breve" até receberem conteúdo.
 
 Como cada tarefa é escrita no código (para referência):
