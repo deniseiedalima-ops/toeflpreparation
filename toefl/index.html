@@ -154,6 +154,16 @@ tr.fb td{background:#fff7f0;font-size:13px;color:#5a4636;border-bottom:1px solid
 .rep{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-top:1px solid #f0e6dc;font-size:14px}
 .pct{flex:none;width:46px;text-align:center;border-radius:8px;font-weight:700;font-size:13px;padding:2px 0}
 .pct.bom{background:#e3f6ea;color:#1f7a45}.pct.medio{background:#fff1d6;color:#9a6400}.pct.ruim{background:#fde4e4;color:#b33}
+.prof-links{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+@media(max-width:700px){.prof-links{grid-template-columns:1fr}}
+.plink{display:flex;flex-direction:column;gap:2px;background:var(--card);color:#fff;border:0;border-radius:18px;padding:18px;text-decoration:none;text-align:left;font:inherit}
+.plink span{font-size:26px}.plink b{font-size:16px}.plink small{color:#aaa;font-size:12px}
+.plink:hover{outline:2px solid var(--orange)}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.fgrid label{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.fgrid input,.fgrid select{padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);font:inherit;font-size:15px;background:#fff;color:var(--ink)}
+.prow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #eee}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);white-space:nowrap}
 /* results */
 .bands{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:14px 0}
 .band{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center}
@@ -204,11 +214,13 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;p
     <button class="tab" data-pane="pane-full">📝 Simulados completos</button>
     <button class="tab" data-pane="pane-data">📊 Meu desempenho</button>
     <button class="tab" data-pane="pane-fb">💬 Feedbacks <span class="badge" id="fb-badge" style="display:none"></span></button>
+    <button class="tab" data-pane="pane-prof" id="tab-prof" style="display:none">👩‍🏫 Painel</button>
   </div>
   <div id="pane-skill" class="pane on"></div>
   <div id="pane-full" class="pane"></div>
   <div id="pane-data" class="pane"></div>
   <div id="pane-fb" class="pane"></div>
+  <div id="pane-prof" class="pane"></div>
 </section>
 
 <!-- INTRO DA SEÇÃO -->
@@ -1269,6 +1281,8 @@ function renderHome() {
 
   renderDados();
   renderFeedbacks();
+  const prof = !!(sessao() || {}).professora;
+  $('tab-prof').style.display = prof ? '' : 'none';
 }
 
 let histRemoto = null, perfilRemoto = null;
@@ -1564,6 +1578,62 @@ function renderFeedbacks() {
   });
 }
 
+
+/* =====================================================================
+   PAINEL DA PROFESSORA (só aparece para quem tem "Professora" marcado no Notion)
+   ===================================================================== */
+const dataBR = d => d ? new Date(d).toLocaleDateString('pt-BR', { timeZone: 'America/Fortaleza' }) : '—';
+const COR_CORR = { 'Aguardando correção': '#b7791f', 'Corrigido pela IA': '#2f6fde', 'Corrigido': '#1f9d55', 'Só objetivas': '#8a847c' };
+async function carregarPainel() {
+  const el = $('pane-prof');
+  el.innerHTML = '<div class="card center"><p class="note">Carregando o painel...</p></div>';
+  let d;
+  try { d = await api('painel', {}); }
+  catch (e) { el.innerHTML = `<div class="card"><p>⚠ ${esc(e.message)}</p><p class="note mt">Se você acabou de virar professora no Notion, clique em <b>Sair</b> e entre de novo com o Google.</p></div>`; return; }
+  const ativos = d.alunos.filter(a => a.status === 'Ativo').length;
+  const pend = d.alunos.filter(a => a.status === 'Pendente');
+  const aguardando = d.resultados.filter(r => r.correcao === 'Aguardando correção');
+  const ia = d.resultados.filter(r => r.correcao === 'Corrigido pela IA');
+  let h = `<div class="prof-links">
+    <a class="plink" href="${esc(d.links.resultados)}" target="_blank" rel="noopener"><span>📊</span><b>Respostas dos alunos</b><small>Notion · TOEFL Resultados</small></a>
+    <a class="plink" href="${esc(d.links.alunos)}" target="_blank" rel="noopener"><span>🎓</span><b>Cadastro de alunos</b><small>Notion · TOEFL Alunos</small></a>
+    <button class="plink" id="prof-novo"><span>➕</span><b>Cadastrar aluno</b><small>direto por aqui</small></button>
+  </div>
+  <div class="chips">
+    <div class="chip big"><b>${ativos}</b> alunos ativos</div>
+    <div class="chip big"><b>${pend.length}</b> aguardando liberação</div>
+    <div class="chip big"><b>${aguardando.length}</b> para corrigir</div>
+    <div class="chip big"><b>${ia.length}</b> corrigidos pela IA (revisar)</div>
+  </div>
+  <div class="card" id="prof-form" style="display:none">
+    <h2 style="font-size:22px;margin-bottom:4px">Cadastrar aluno</h2>
+    <p class="note" style="margin-bottom:12px">O aluno já entra liberado (Ativo). Use o mesmo Gmail que ele vai usar para entrar.</p>
+    <div class="fgrid">
+      <label>Nome completo<input type="text" id="pf-nome"></label>
+      <label>Gmail<input type="text" id="pf-email" placeholder="aluno@gmail.com"></label>
+      <label>Turma<select id="pf-turma"><option value="">—</option><option>Particular</option><option>Grupo</option></select></label>
+      <label>Meta (banda)<input type="text" id="pf-meta" placeholder="ex.: 5"></label>
+      <label>Data da prova<input type="date" id="pf-data"></label>
+    </div>
+    <div class="nav" style="justify-content:flex-start"><button class="btn" id="pf-salvar">Cadastrar</button><span class="note" id="pf-msg" style="align-self:center"></span></div>
+  </div>`;
+  if (pend.length) h += `<div class="card"><h2 style="font-size:20px;margin-bottom:8px">⏳ Aguardando liberação</h2>${pend.map(a => `<div class="prow"><div><b>${esc(a.nome)}</b><div class="note">${esc(a.email || '')}</div></div><a class="btn ghost sm" href="${esc(a.url)}" target="_blank" rel="noopener">Abrir no Notion e liberar</a></div>`).join('')}</div>`;
+  h += `<div class="card"><h2 style="font-size:20px;margin-bottom:8px">📥 Últimas respostas</h2>`;
+  if (!d.resultados.length) h += '<p class="note">Nenhum simulado feito ainda.</p>';
+  else h += '<div style="overflow-x:auto"><table><tr><th>Data</th><th>Aluno</th><th>Simulado</th><th>Nota</th><th>Correção</th><th></th></tr>' + d.resultados.map(r => `<tr><td>${dataBR(r.data)}</td><td>${esc(r.aluno)}</td><td>${esc(r.simulado)}</td><td><b>${n1(r.nota)}</b></td><td><span class="pill" style="--c:${COR_CORR[r.correcao] || '#8a847c'}">${esc(r.correcao || '—')}</span></td><td><a href="${esc(r.url)}" target="_blank" rel="noopener">abrir ↗</a></td></tr>`).join('') + '</table></div>';
+  h += '</div>';
+  h += `<div class="card"><h2 style="font-size:20px;margin-bottom:8px">🎓 Alunos</h2><div style="overflow-x:auto"><table><tr><th>Aluno</th><th>Gmail</th><th>Status</th><th>Turma</th><th>Meta</th><th>Último acesso</th><th></th></tr>` + d.alunos.map(a => `<tr><td>${esc(a.nome)}</td><td>${esc(a.email || '')}</td><td>${esc(a.status)}</td><td>${esc(a.turma || '—')}</td><td>${n1(a.meta)}</td><td>${dataBR(a.ultimo)}</td><td><a href="${esc(a.url)}" target="_blank" rel="noopener">abrir ↗</a></td></tr>`).join('') + '</table></div></div>';
+  el.innerHTML = h;
+  $('prof-novo').onclick = () => { const f = $('prof-form'); f.style.display = f.style.display === 'none' ? '' : 'none'; if (f.style.display === '') $('pf-nome').focus(); };
+  $('pf-salvar').onclick = async () => {
+    const msg = $('pf-msg'); msg.textContent = 'Salvando...';
+    try {
+      await api('cadastrar', { nome: $('pf-nome').value, email: $('pf-email').value, turma: $('pf-turma').value, meta: $('pf-meta').value.replace(',', '.'), dataProva: $('pf-data').value });
+      msg.textContent = '✓ Aluno cadastrado'; setTimeout(carregarPainel, 900);
+    } catch (e) { msg.textContent = '⚠ ' + e.message; }
+  };
+}
+
 /* =====================================================================
    EVENTOS
    ===================================================================== */
@@ -1580,7 +1650,7 @@ async function aoLogar(resp) {
     const j = await r.json();
     if (!r.ok) throw new Error(j.error);
     if (j.bloqueado) { msg.textContent = j.status === 'Pendente' ? `Oi, ${j.nome.split(' ')[0]}! Seu acesso foi registrado e está aguardando liberação da Denise.` : 'Seu acesso está bloqueado. Fale com a Denise.'; return; }
-    localStorage.setItem('toefl_sessao', JSON.stringify({ token: j.token, nome: j.nome, email: j.email, foto: j.foto }));
+    localStorage.setItem('toefl_sessao', JSON.stringify({ token: j.token, nome: j.nome, email: j.email, foto: j.foto, professora: !!j.professora }));
     msg.textContent = ''; entrar();
   } catch (e) { msg.textContent = '⚠ Não foi possível entrar: ' + e.message; }
 }
@@ -1609,6 +1679,7 @@ document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t));
   document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === t.dataset.pane));
   if (t.dataset.pane === 'pane-fb' && histRemoto) marcarFeedbacksVistos();
+  if (t.dataset.pane === 'pane-prof') carregarPainel();
 });
 $('intro-voltar').onclick = () => cancelarSimulado(state.iSec === 0);
 $('btn-cancelar').onclick = () => cancelarSimulado(false);

@@ -98,7 +98,11 @@ async function login(body) {
       },
     });
   } else {
+    const extra = {};
+    if (!(pg.properties['Primeiro acesso'] && pg.properties['Primeiro acesso'].date)) extra['Primeiro acesso'] = { date: { start: hoje() } };
+    if (!plain(pg.properties['Google ID'])) extra['Google ID'] = { rich_text: rich(g.googleId) };
     await notion(`/pages/${pg.id}`, 'PATCH', { properties: {
+      ...extra,
       'Último acesso': { date: { start: hoje() } },
       'Acessos': { number: ((pg.properties['Acessos'] || {}).number || 0) + 1 },
       'Foto': { url: g.foto || null },
@@ -109,7 +113,8 @@ async function login(body) {
     return { bloqueado: true, status, nome: g.nome };
   }
   const nome = plain(pg.properties['Aluno']) || g.nome;
-  return { token: assinar({ email: g.email, alunoId: pg.id, nome }), nome, email: g.email, foto: g.foto };
+  const professora = !!(pg.properties['Professora'] && pg.properties['Professora'].checkbox);
+  return { token: assinar({ email: g.email, alunoId: pg.id, nome, professora }), nome, email: g.email, foto: g.foto, professora };
 }
 
 /* ---------- gravar resultado ---------- */
@@ -230,6 +235,43 @@ async function detalhe(body, sessao) {
     }
   }
   return { textos, gravacoes };
+}
+
+/* ---------- Painel da professora ---------- */
+const linkNotion = id => 'https://www.notion.so/' + String(id).replace(/-/g, '');
+async function painel() {
+  const [al, rs] = await Promise.all([
+    notion(`/databases/${idNotion('TOEFL_ALUNOS_DB')}/query`, 'POST', { page_size: 100, sorts: [{ property: 'Último acesso', direction: 'descending' }] }),
+    notion(`/databases/${idNotion('TOEFL_RESULTADOS_DB')}/query`, 'POST', { page_size: 40, sorts: [{ property: 'Data', direction: 'descending' }] }),
+  ]);
+  const sel = (p, k) => p.properties[k] && p.properties[k].select ? p.properties[k].select.name : '';
+  const num = (p, k) => p.properties[k] && p.properties[k].number != null ? p.properties[k].number : null;
+  const data = (p, k) => p.properties[k] && p.properties[k].date ? p.properties[k].date.start : null;
+  const alunos = al.results.map(p => ({ nome: plain(p.properties['Aluno']), email: p.properties['E-mail'] && p.properties['E-mail'].email, status: sel(p, 'Status'), turma: sel(p, 'Turma'), meta: num(p, 'Meta (banda)'), ultimo: data(p, 'Último acesso'), url: linkNotion(p.id) }));
+  const nomePorId = Object.fromEntries(al.results.map(p => [p.id, plain(p.properties['Aluno'])]));
+  const resultados = rs.results.map(p => {
+    const rel = p.properties['Aluno'] && p.properties['Aluno'].relation || [];
+    const nf = p.properties['Nota final'] && p.properties['Nota final'].formula;
+    return { aluno: rel[0] ? (nomePorId[rel[0].id] || '') : plain(p.properties['Resultado']).split(' · ')[0], simulado: plain(p.properties['Simulado']), tipo: sel(p, 'Tipo'), data: data(p, 'Data'), correcao: sel(p, 'Correção'), nota: nf && typeof nf.number === 'number' ? nf.number : null, url: linkNotion(p.id) };
+  });
+  return {
+    alunos, resultados,
+    links: { alunos: linkNotion(idNotion('TOEFL_ALUNOS_DB')), resultados: linkNotion(idNotion('TOEFL_RESULTADOS_DB')) },
+  };
+}
+async function cadastrar(body) {
+  const nome = String(body.nome || '').trim(), email = String(body.email || '').trim().toLowerCase();
+  if (!nome || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error('Preencha nome e um e-mail válido');
+  if (await acharAluno(email)) throw new Error('Esse e-mail já está cadastrado');
+  const props = {
+    'Aluno': { title: rich(nome) }, 'E-mail': { email },
+    'Status': { select: { name: 'Ativo' } }, 'Acessos': { number: 0 },
+  };
+  if (body.turma) props['Turma'] = { select: { name: body.turma === 'Grupo' ? 'Grupo' : 'Particular' } };
+  if (body.meta) props['Meta (banda)'] = { number: Number(body.meta) };
+  if (body.dataProva) props['Data da prova'] = { date: { start: String(body.dataProva).slice(0, 10) } };
+  const pg = await notion('/pages', 'POST', { parent: { database_id: idNotion('TOEFL_ALUNOS_DB') }, icon: { type: 'emoji', emoji: '🎓' }, properties: props });
+  return { ok: true, url: linkNotion(pg.id) };
 }
 
 /* ---------- perfil do aluno (meta e data da prova que a Denise preenche) ---------- */
@@ -488,6 +530,10 @@ module.exports = async (req, res) => {
     }
     if (acao === 'transcrever') return res.status(200).json(await transcrever(body));
     if (acao === 'corrigir') return res.status(200).json(await corrigir(body, sessao));
+    if (acao === 'painel' || acao === 'cadastrar') {
+      if (!sessao.professora) return res.status(403).json({ error: 'Área exclusiva da professora' });
+      return res.status(200).json(acao === 'painel' ? await painel() : await cadastrar(body));
+    }
     if (acao === 'detalhe') return res.status(200).json(await detalhe(body, sessao));
     if (acao === 'historico') {
       const [itens, perfil] = await Promise.all([historico(sessao), perfilAluno(sessao)]);
